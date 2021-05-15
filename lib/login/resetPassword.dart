@@ -3,20 +3,20 @@ import 'package:ipresent/login/loadingSignUp.dart';
 import 'package:ipresent/login/signinScreenWords.dart';
 
 class ResetPassword extends StatefulWidget {
-  final Color backgroundColor;
-  final Color textColor;
-  final SigninScreenWords signinScreenWords;
-  final String logo;
+  final Color? backgroundColor;
+  final Color? textColor;
+  final SigninScreenWords? signinScreenWords;
+  final String? logo;
   final Function funResetPassword;
   final isFooter;
-  final Widget widgetFooter;
+  final Widget? widgetFooter;
 
   const ResetPassword(
       {this.backgroundColor,
       this.textColor,
       this.signinScreenWords,
       this.logo,
-      this.funResetPassword,
+      required this.funResetPassword,
       this.isFooter,
       this.widgetFooter});
 
@@ -28,7 +28,7 @@ class _ResetPasswordState extends State<ResetPassword> {
   TextEditingController _textEditingControllerUser = TextEditingController();
   bool isRequest = false;
   final focus = FocusNode();
-  SigninScreenWords signinScreenWords;
+  SigninScreenWords? signinScreenWords;
   @override
   Widget build(BuildContext context) {
     signinScreenWords = (widget.signinScreenWords == null)
@@ -41,7 +41,7 @@ class _ResetPasswordState extends State<ResetPassword> {
         centerTitle: true,
         elevation: 0,
         title: Text(
-          this.signinScreenWords.recoverPassword,
+          this.signinScreenWords!.recoverPassword,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
@@ -69,7 +69,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                         child: Hero(
                           tag: 'hero-login',
                           child: Image.asset(
-                            widget.logo,
+                            widget.logo!,
                             fit: BoxFit.contain,
                           ),
                         ),
@@ -110,7 +110,7 @@ class _ResetPasswordState extends State<ResetPassword> {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Text(
-                signinScreenWords.messageRecoverPassword,
+                signinScreenWords!.messageRecoverPassword,
                 textAlign: TextAlign.justify,
                 style: TextStyle(
                     color: widget.textColor ?? Color(0xFF0F2E48), fontSize: 14),
@@ -130,7 +130,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                   },
                   decoration: InputDecoration(
                     floatingLabelBehavior: FloatingLabelBehavior.auto,
-                    labelText: this.signinScreenWords.hintLoginUser,
+                    labelText: this.signinScreenWords!.hintLoginUser,
                     labelStyle: TextStyle(color: Colors.black38, fontSize: 18),
                     isDense: false,
                     prefixIcon: Padding(
@@ -157,7 +157,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                 ? Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: LoadingSignUp(
-                      textLoading: this.signinScreenWords.textLoading,
+                      textLoading: this.signinScreenWords!.textLoading,
                       colorText: widget.textColor,
                       backgroundColor: widget.backgroundColor,
                       elevation: 0,
@@ -183,7 +183,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: Center(
                               child: Text(
-                                this.signinScreenWords.recoverPassword,
+                                this.signinScreenWords!.recoverPassword,
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 15,
@@ -198,9 +198,10 @@ class _ResetPasswordState extends State<ResetPassword> {
           ],
         ),
         SizedBox(),
-        (widget.isFooter == null || widget.isFooter == false)
-            ? SizedBox()
-            : widget.widgetFooter
+        // (widget.isFooter == null || widget.isFooter! == false)
+        //     ? SizedBox()
+        //:
+        widget.widgetFooter!
       ],
     );
   }

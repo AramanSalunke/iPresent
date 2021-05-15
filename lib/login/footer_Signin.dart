@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class SigninScreenFooter extends StatelessWidget {
-  final String text;
-  final String logo;
+  final String? text;
+  final String? logo;
 
-  final Color textColor;
+  final Color? textColor;
 
-  final Function funFooterLogin;
+  final Function()? funFooterLogin;
 
   SigninScreenFooter({
     this.text,
@@ -31,7 +31,7 @@ class SigninScreenFooter extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 8.0),
                   child: Text(
-                    this.text + '  ',
+                    this.text! + '  ',
                     style: TextStyle(
                       color: this.textColor ?? Color(0xFF0F2E48),
                       fontSize: 13,
@@ -40,7 +40,7 @@ class SigninScreenFooter extends StatelessWidget {
                 ),
               ),
               Image.asset(
-                this.logo,
+                this.logo!,
                 width: 120,
               ),
             ],

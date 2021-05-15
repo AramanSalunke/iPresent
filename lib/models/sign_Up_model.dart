@@ -8,13 +8,13 @@ import 'package:ipresent/core/enums/helpers/shared_preference_helper.dart';
 class SignUpModel extends BaseViewModel {
   AuthServices _authServices = locator<AuthServices>();
   SharedPreferencesHelper _sharedPreferencesHelper = SharedPreferencesHelper();
-  String email;
-  String password;
-  String repeatPassword;
+  String? email;
+  String? password;
+  String? repeatPassword;
 
-  String name;
-  String surname;
-  String passwordError = null;
+  String? name;
+  String? surname;
+  String? passwordError = null;
 
   getEmail(String userEmail) {
     email = userEmail;
@@ -46,8 +46,8 @@ class SignUpModel extends BaseViewModel {
   }
 
   register() async {
-    await _sharedPreferencesHelper.clearAllData();
+    //await _sharedPreferencesHelper.clearAllData();
     FirebaseAuthResults authResults =
-        await _authServices.signUp(email, password);
+        await _authServices.signUp(email!, password!);
   }
 }

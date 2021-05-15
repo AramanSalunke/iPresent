@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class LoadingSignUp extends StatelessWidget {
-  final String textLoading;
-  final Color colorText;
-  final double elevation;
+  final String? textLoading;
+  final Color? colorText;
+  final double? elevation;
 
-  final Color backgroundColor;
+  final Color? backgroundColor;
 
   LoadingSignUp(
       {this.textLoading, this.colorText, this.elevation, this.backgroundColor});
@@ -41,7 +41,7 @@ class LoadingSignUp extends StatelessWidget {
                 margin: const EdgeInsets.only(top: 5.0),
                 child: new Center(
                   child: new Text(
-                    this.textLoading,
+                    this.textLoading!,
                     style: new TextStyle(color: this.colorText),
                   ),
                 ),

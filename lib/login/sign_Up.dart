@@ -6,13 +6,13 @@ import 'package:ipresent/login/loadingSignUp.dart';
 import 'package:stacked/stacked.dart';
 
 class SignUp extends StatefulWidget {
-  final Color backgroundColor;
-  final Color textColor;
-  final SigninScreenWords signinScreenWords;
-  final Function funSignUp;
-  final bool isFooter;
-  final Widget widgetFooter;
-  final String logo;
+  final Color? backgroundColor;
+  final Color? textColor;
+  final SigninScreenWords? signinScreenWords;
+  final Function? funSignUp;
+  final bool? isFooter;
+  final Widget? widgetFooter;
+  final String? logo;
   //final bool isRequest;
   SignUp({
     this.backgroundColor,
@@ -31,7 +31,7 @@ class _SignUpState extends State<SignUp> {
   SignUpModel signUpModel = SignUpModel();
   bool isRequest = false;
   bool isNoVisiblePassword = true;
-  SigninScreenWords signinScreenWords;
+  SigninScreenWords? signinScreenWords;
   @override
   Widget build(BuildContext context) {
     signinScreenWords = (widget.signinScreenWords == null)
@@ -47,7 +47,7 @@ class _SignUpState extends State<SignUp> {
                 centerTitle: true,
                 elevation: 0,
                 title: Text(
-                  this.signinScreenWords.signUp,
+                  this.signinScreenWords!.signUp,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -77,7 +77,7 @@ class _SignUpState extends State<SignUp> {
                                 child: Hero(
                                   tag: 'hero-login',
                                   child: Image.asset(
-                                    widget.logo,
+                                    widget.logo!,
                                     fit: BoxFit.contain,
                                   ),
                                 ),
@@ -131,14 +131,14 @@ class _SignUpState extends State<SignUp> {
                     // autofocus: false,
                     decoration: InputDecoration(
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      labelText: this.signinScreenWords.hintLoginUser,
+                      labelText: this.signinScreenWords!.hintLoginUser,
                       labelStyle:
                           TextStyle(color: Colors.black38, fontSize: 18),
                       isDense: false,
                       focusedBorder: OutlineInputBorder(
                           gapPadding: 0.0,
                           borderSide:
-                              BorderSide(width: 2, color: Colors.pink[300]),
+                              BorderSide(width: 2, color: Colors.pink[300]!),
                           borderRadius: BorderRadius.all(Radius.circular(30))),
                       enabledBorder: OutlineInputBorder(
                           gapPadding: 1.0,
@@ -160,14 +160,14 @@ class _SignUpState extends State<SignUp> {
                     //autofocus: false,
                     decoration: InputDecoration(
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      labelText: this.signinScreenWords.hintName,
+                      labelText: this.signinScreenWords!.hintName,
                       labelStyle:
                           TextStyle(color: Colors.black38, fontSize: 18),
                       isDense: false,
                       focusedBorder: OutlineInputBorder(
                           gapPadding: 0.0,
                           borderSide:
-                              BorderSide(width: 2, color: Colors.pink[300]),
+                              BorderSide(width: 2, color: Colors.pink[300]!),
                           borderRadius: BorderRadius.all(Radius.circular(30))),
                       enabledBorder: OutlineInputBorder(
                           gapPadding: 1.0,
@@ -189,14 +189,14 @@ class _SignUpState extends State<SignUp> {
                     //autofocus: false,
                     decoration: InputDecoration(
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      labelText: this.signinScreenWords.hintSurname,
+                      labelText: this.signinScreenWords!.hintSurname,
                       labelStyle:
                           TextStyle(color: Colors.black38, fontSize: 18),
                       isDense: false,
                       focusedBorder: OutlineInputBorder(
                           gapPadding: 0.0,
                           borderSide:
-                              BorderSide(width: 2, color: Colors.pink[300]),
+                              BorderSide(width: 2, color: Colors.pink[300]!),
                           borderRadius: BorderRadius.all(Radius.circular(30))),
                       enabledBorder: OutlineInputBorder(
                           gapPadding: 1.0,
@@ -244,14 +244,14 @@ class _SignUpState extends State<SignUp> {
                                       height: 15),
                                 )),
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      labelText: this.signinScreenWords.hintLoginPassword,
+                      labelText: this.signinScreenWords!.hintLoginPassword,
                       labelStyle:
                           TextStyle(color: Colors.black38, fontSize: 18),
                       isDense: false,
                       focusedBorder: OutlineInputBorder(
                           gapPadding: 0.0,
                           borderSide:
-                              BorderSide(width: 2.0, color: Colors.pink[300]),
+                              BorderSide(width: 2.0, color: Colors.pink[300]!),
                           borderRadius: BorderRadius.all(Radius.circular(30))),
                       enabledBorder: OutlineInputBorder(
                           gapPadding: 1.0,
@@ -274,14 +274,14 @@ class _SignUpState extends State<SignUp> {
                     decoration: InputDecoration(
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       labelText:
-                          this.signinScreenWords.hintSignUpRepeatPassword,
+                          this.signinScreenWords!.hintSignUpRepeatPassword,
                       labelStyle:
                           TextStyle(color: Colors.black38, fontSize: 18),
                       isDense: false,
                       focusedBorder: OutlineInputBorder(
                           gapPadding: 0.0,
                           borderSide:
-                              BorderSide(width: 2.0, color: Colors.pink[300]),
+                              BorderSide(width: 2.0, color: Colors.pink[300]!),
                           borderRadius: BorderRadius.all(Radius.circular(30))),
                       enabledBorder: OutlineInputBorder(
                           gapPadding: 1.0,
@@ -298,7 +298,7 @@ class _SignUpState extends State<SignUp> {
             ? Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: LoadingSignUp(
-                  textLoading: this.signinScreenWords.textLoading,
+                  textLoading: this.signinScreenWords!.textLoading,
                   colorText: widget.textColor,
                   backgroundColor: widget.backgroundColor,
                   elevation: 0,
@@ -319,7 +319,7 @@ class _SignUpState extends State<SignUp> {
                     color: widget.backgroundColor ?? Color(0xFFE7004C),
                     child: Center(
                       child: Text(
-                        this.signinScreenWords.signUp,
+                        this.signinScreenWords!.signUp,
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 15,
@@ -329,7 +329,7 @@ class _SignUpState extends State<SignUp> {
                   ),
                 ),
               ),
-        widget.widgetFooter
+        widget.widgetFooter!
       ],
     );
   }

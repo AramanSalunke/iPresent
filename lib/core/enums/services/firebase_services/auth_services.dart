@@ -38,7 +38,7 @@ class AuthServices extends Services {
     }
   }
 
-  Future<FirebaseAuthResults> resetPassword(String email) async {
+  resetPassword(String email) async {
     await auth().sendPasswordResetEmail(email: email);
   }
 
@@ -59,8 +59,8 @@ class AuthServices extends Services {
   }
 
   String currentUserEmail() {
-    String userid = user().email;
-    return userid;
+    String? userid = user().email;
+    return userid!;
   }
 
   signOut() async {
