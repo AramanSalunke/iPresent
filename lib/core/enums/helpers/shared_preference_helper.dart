@@ -4,14 +4,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesHelper {
-  SharedPreferences _sharedPreferences;
+  late SharedPreferences _sharedPreferences;
   final String _loggedInUserId = '_loggedInUserId';
   final String _loggedInUserEmailId = '_loggedInUserEmailId';
   final String _userName = '_userName';
   final String _userSurname = '_userSurname';
 
   SharedPreferencesHelper() {
-    _init();
+    _init()!;
   }
   _init() async {
     if (_sharedPreferences == null)
@@ -27,7 +27,7 @@ class SharedPreferencesHelper {
 
   Future<String> getLoggedInUserId() async {
     await _init();
-    String res = _sharedPreferences.getString(_loggedInUserId);
+    String res = _sharedPreferences.getString(_loggedInUserId)!;
     debugPrint('User Id Retrived' + res.toString());
     return res;
   }
@@ -42,7 +42,7 @@ class SharedPreferencesHelper {
 
   Future<String> getLoggedInUserEmailId(String emailId) async {
     await _init();
-    String res = _sharedPreferences.getString(_loggedInUserEmailId);
+    String res = _sharedPreferences.getString(_loggedInUserEmailId)!;
     debugPrint('User Email Id Retrived' + res.toString());
     return res;
   }
@@ -70,7 +70,7 @@ class SharedPreferencesHelper {
 
   Future<String> getUserSurname() async {
     await _init();
-    String userSurname = _sharedPreferences.getString(_userSurname);
+    String userSurname = _sharedPreferences.getString(_userSurname)!;
     debugPrint('User surname Returned' + _userSurname);
     return userSurname;
   }

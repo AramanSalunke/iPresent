@@ -5,21 +5,21 @@ import 'package:ipresent/login/sign_Up.dart';
 import 'package:ipresent/login/signinScreenWords.dart';
 
 class SigninUserAndPassword extends StatefulWidget {
-  final Color backgroundColor;
-  final String logo;
-  final Color textColor;
+  final Color? backgroundColor;
+  final String? logo;
+  final Color? textColor;
 
-  final bool isFooter;
-  final Widget widgetFooter;
+  final bool? isFooter;
+  final Widget? widgetFooter;
 
-  final bool isResetPassword;
-  final Widget widgetResetPassword;
+  final bool? isResetPassword;
+  final Widget? widgetResetPassword;
 
-  final bool isSignUp;
-  final Widget signUp;
+  final bool? isSignUp;
+  final Widget? signUp;
 
   final Function callLogin;
-  final SigninScreenWords signinScreenWords;
+  final SigninScreenWords? signinScreenWords;
 
   const SigninUserAndPassword(
       {this.backgroundColor,
@@ -31,7 +31,7 @@ class SigninUserAndPassword extends StatefulWidget {
       this.widgetResetPassword,
       this.isSignUp,
       this.signUp,
-      this.callLogin,
+      required this.callLogin,
       this.signinScreenWords});
   @override
   _SigninUserAndPasswordState createState() => _SigninUserAndPasswordState();
@@ -46,7 +46,7 @@ class _SigninUserAndPasswordState extends State<SigninUserAndPassword> {
   bool isRequest = false;
   final focus = FocusNode();
   final bool isLoginRequest = false;
-  SigninScreenWords signinScreenWords;
+  SigninScreenWords? signinScreenWords;
   @override
   Widget build(BuildContext context) {
     signinScreenWords = (widget.signinScreenWords == null)
@@ -59,7 +59,7 @@ class _SigninUserAndPasswordState extends State<SigninUserAndPassword> {
         centerTitle: true,
         elevation: 0,
         title: Text(
-          this.signinScreenWords.login,
+          this.signinScreenWords!.login,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
@@ -87,7 +87,7 @@ class _SigninUserAndPasswordState extends State<SigninUserAndPassword> {
                         child: Hero(
                           tag: 'hero-login',
                           child: Image.asset(
-                            widget.logo,
+                            widget.logo!,
                             fit: BoxFit.contain,
                           ),
                         ),
@@ -150,7 +150,7 @@ class _SigninUserAndPasswordState extends State<SigninUserAndPassword> {
                     },
                     decoration: InputDecoration(
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      labelText: this.signinScreenWords.hintLoginUser,
+                      labelText: this.signinScreenWords!.hintLoginUser,
                       labelStyle:
                           TextStyle(color: Colors.black38, fontSize: 18),
                       isDense: false,
@@ -230,7 +230,7 @@ class _SigninUserAndPasswordState extends State<SigninUserAndPassword> {
                                       height: 15),
                                 )),
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      labelText: this.signinScreenWords.hintLoginPassword,
+                      labelText: this.signinScreenWords!.hintLoginPassword,
                       labelStyle:
                           TextStyle(color: Colors.black38, fontSize: 18),
                       isDense: false,
@@ -251,7 +251,7 @@ class _SigninUserAndPasswordState extends State<SigninUserAndPassword> {
                   ? Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: LoadingSignUp(
-                        textLoading: this.signinScreenWords.textLoading,
+                        textLoading: this.signinScreenWords!.textLoading,
                         colorText: widget.textColor,
                         backgroundColor: widget.backgroundColor,
                         elevation: 0,
@@ -278,7 +278,7 @@ class _SigninUserAndPasswordState extends State<SigninUserAndPassword> {
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: Center(
                               child: Text(
-                                this.signinScreenWords.login,
+                                this.signinScreenWords!.login,
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 15,
@@ -307,7 +307,7 @@ class _SigninUserAndPasswordState extends State<SigninUserAndPassword> {
                                     fontWeight: FontWeight.normal,
                                     fontSize: 15)),
                             TextSpan(
-                                text: this.signinScreenWords.recoverPassword,
+                                text: this.signinScreenWords!.recoverPassword,
                                 style: TextStyle(
                                     decoration: TextDecoration.underline,
                                     color:
@@ -319,7 +319,7 @@ class _SigninUserAndPasswordState extends State<SigninUserAndPassword> {
                       ),
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => widget.widgetResetPassword,
+                          builder: (context) => widget.widgetResetPassword!,
                         ));
                       },
                     ),
@@ -331,13 +331,13 @@ class _SigninUserAndPasswordState extends State<SigninUserAndPassword> {
                     textAlign: TextAlign.center,
                     text: TextSpan(children: [
                       TextSpan(
-                          text: this.signinScreenWords.notAccount + '\n',
+                          text: this.signinScreenWords!.notAccount + '\n',
                           style: TextStyle(
                               color: widget.textColor ?? Color(0xFF0F2E48),
                               fontWeight: FontWeight.normal,
                               fontSize: 15)),
                       TextSpan(
-                          text: this.signinScreenWords.signUp,
+                          text: this.signinScreenWords!.signUp,
                           style: TextStyle(
                               decoration: TextDecoration.underline,
                               color: widget.textColor ?? Color(0xFF0F2E48),

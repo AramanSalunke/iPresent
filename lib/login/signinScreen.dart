@@ -6,19 +6,19 @@ import 'package:ipresent/login/signinScreenWords.dart';
 import 'package:ipresent/login/type_login.dart';
 
 class SigninScreen extends StatefulWidget {
-  final Color backgroundColor;
-  final String pathLogo;
-  final Color cardColor;
-  final Color textColor;
-  final bool isFooter;
-  final Widget widgetSignUp;
-  final Widget widgetFooter;
-  final bool isExploreApp;
-  final Function functionExploreApp;
-  final bool isSignUp;
-  final List<SigninScreenTypeSignModel> typeSigninModel;
+  final Color? backgroundColor;
+  final String? pathLogo;
+  final Color? cardColor;
+  final Color? textColor;
+  final bool? isFooter;
+  final Widget? widgetSignUp;
+  final Widget? widgetFooter;
+  final bool? isExploreApp;
+  final Function()? functionExploreApp;
+  final bool? isSignUp;
+  final List<SigninScreenTypeSignModel>? typeSigninModel;
 
-  SigninScreenWords keyWord;
+  SigninScreenWords? keyWord;
   SigninScreen(
       {this.backgroundColor,
       this.pathLogo,
@@ -51,7 +51,7 @@ class _SigninScreenState extends State<SigninScreen> {
               width: MediaQuery.of(context).size.width * 0.60,
               child: Center(
                 child: Image.asset(
-                  widget.pathLogo,
+                  widget.pathLogo!,
                   fit: BoxFit.contain,
                 ),
               ),
@@ -91,7 +91,7 @@ class _SigninScreenState extends State<SigninScreen> {
                         : buildSignUp(),
                   ],
                 ),
-                widget.widgetFooter
+                widget.widgetFooter!
               ],
             ),
           ),
@@ -107,7 +107,7 @@ class _SigninScreenState extends State<SigninScreen> {
             onTap: widget.functionExploreApp,
             child: SizedBox(
                 height: MediaQuery.of(context).size.height * 0.07,
-                width: (widget.typeSigninModel.length > 3)
+                width: (widget.typeSigninModel!.length > 3)
                     ? MediaQuery.of(context).size.width * 0.90
                     : MediaQuery.of(context).size.width * 0.80,
                 child: Card(
@@ -120,7 +120,7 @@ class _SigninScreenState extends State<SigninScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Center(
                           child: Text(
-                        widget.keyWord.exploreApp,
+                        widget.keyWord!.exploreApp,
                         style: TextStyle(
                             color: widget.textColor ?? Color(0xFF0F2E48),
                             fontSize: 15,
@@ -138,13 +138,13 @@ class _SigninScreenState extends State<SigninScreen> {
           textAlign: TextAlign.center,
           text: TextSpan(children: [
             TextSpan(
-                text: widget.keyWord.notAccount + '\n',
+                text: widget.keyWord!.notAccount + '\n',
                 style: TextStyle(
                     color: widget.textColor ?? Color(0xFF0F2E48),
                     fontWeight: FontWeight.normal,
                     fontSize: 15)),
             TextSpan(
-                text: widget.keyWord.signUp,
+                text: widget.keyWord!.signUp,
                 style: TextStyle(
                     decoration: TextDecoration.underline,
                     color: widget.textColor ?? Color(0xFF0F2E48),
@@ -174,7 +174,7 @@ class _SigninScreenState extends State<SigninScreen> {
   Padding buildLoginWith() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Text(widget.keyWord.loginWith,
+      child: Text(widget.keyWord!.loginWith,
           style: TextStyle(
               color: widget.textColor ?? Color(0xFF0F2E48),
               fontSize: 16,
@@ -185,7 +185,7 @@ class _SigninScreenState extends State<SigninScreen> {
   SizedBox buildTypeLogin(BuildContext context) {
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.1,
-      width: (widget.typeSigninModel.length > 3)
+      width: (widget.typeSigninModel!.length > 3)
           ? MediaQuery.of(context).size.width * 0.90
           : MediaQuery.of(context).size.width * 0.80,
       child: Card(
@@ -208,14 +208,15 @@ class _SigninScreenState extends State<SigninScreen> {
 
   List<Widget> getCardLogin() {
     List<Widget> list = [];
-    for (SigninScreenTypeSignModel tlm in widget.typeSigninModel) {
+    for (SigninScreenTypeSignModel tlm in widget.typeSigninModel!) {
       list.add(GestureDetector(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Image(
               image: ExactAssetImage(
-                tlm.logo,
-                package: (tlm.logo.contains('signinScreen')) ? 'assets/' : null,
+                tlm.logo!,
+                package:
+                    (tlm.logo!.contains('signinScreen')) ? 'assets/' : null,
               ),
             ),
           ),

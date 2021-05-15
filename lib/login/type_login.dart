@@ -7,7 +7,7 @@ class TypeLogo {
 
 class SigninScreenTypeSignModel {
   Function callFunction;
-  String logo;
+  String? logo;
 
-  SigninScreenTypeSignModel({this.logo, this.callFunction});
+  SigninScreenTypeSignModel({this.logo, required this.callFunction});
 }
