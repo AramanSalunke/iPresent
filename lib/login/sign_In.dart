@@ -3,6 +3,8 @@ import 'package:ipresent/login/footer_Signin.dart';
 import 'package:ipresent/login/loadingSignUp.dart';
 import 'package:ipresent/login/sign_Up.dart';
 import 'package:ipresent/login/signinScreenWords.dart';
+import 'package:ipresent/models/signin_model.dart';
+import 'package:stacked/stacked.dart';
 
 class SigninUserAndPassword extends StatefulWidget {
   final Color? backgroundColor;
@@ -38,6 +40,7 @@ class SigninUserAndPassword extends StatefulWidget {
 }
 
 class _SigninUserAndPasswordState extends State<SigninUserAndPassword> {
+  SigninModel signinModel = SigninModel();
   TextEditingController _textEditingControllerPassword =
       TextEditingController();
   TextEditingController _textEditingControllerUser = TextEditingController();
@@ -52,72 +55,77 @@ class _SigninUserAndPasswordState extends State<SigninUserAndPassword> {
     signinScreenWords = (widget.signinScreenWords == null)
         ? SigninScreenWords()
         : widget.signinScreenWords;
-    return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.white),
-        backgroundColor: widget.backgroundColor ?? Color(0xFFE7004C),
-        centerTitle: true,
-        elevation: 0,
-        title: Text(
-          this.signinScreenWords!.login,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
-        ),
-      ),
-      body: Stack(
-        children: [
-          Align(
-            alignment: Alignment.topCenter,
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.7,
-              width: MediaQuery.of(context).size.width,
-              color: widget.backgroundColor ?? Color(0xFFE7004C),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.center,
+    return ViewModelBuilder<SigninModel>.reactive(
+        viewModelBuilder: () => SigninModel(),
+        // onModelReady: (model) => model.getUserInfo(),
+        builder: (context, model, child) => Scaffold(
+              appBar: AppBar(
+                iconTheme: IconThemeData(color: Colors.white),
+                backgroundColor: widget.backgroundColor ?? Color(0xFFE7004C),
+                centerTitle: true,
+                elevation: 0,
+                title: Text(
+                  this.signinScreenWords!.login,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18),
+                ),
+              ),
+              body: Stack(
                 children: [
-                  Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 50, vertical: 3),
-                        child: Hero(
-                          tag: 'hero-login',
-                          child: Image.asset(
-                            widget.logo!,
-                            fit: BoxFit.contain,
-                          ),
-                        ),
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.7,
+                      width: MediaQuery.of(context).size.width,
+                      color: widget.backgroundColor ?? Color(0xFFE7004C),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 50, vertical: 3),
+                                child: Hero(
+                                  tag: 'hero-login',
+                                  child: Image.asset(
+                                    widget.logo!,
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
                       ),
-                    ],
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * .7,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: new BoxDecoration(
+                          color: Color(0xFFF3F3F5),
+                          borderRadius: new BorderRadius.only(
+                            topLeft: const Radius.circular(50.0),
+                            topRight: const Radius.circular(50.0),
+                          )),
+                      child: buildBody(model),
+                    ),
                   )
                 ],
               ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              height: MediaQuery.of(context).size.height * .7,
-              width: MediaQuery.of(context).size.width,
-              decoration: new BoxDecoration(
-                  color: Color(0xFFF3F3F5),
-                  borderRadius: new BorderRadius.only(
-                    topLeft: const Radius.circular(50.0),
-                    topRight: const Radius.circular(50.0),
-                  )),
-              child: buildBody(),
-            ),
-          )
-        ],
-      ),
-    );
+            ));
   }
 
-  Widget buildBody() {
+  Widget buildBody(SigninModel model) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -140,6 +148,7 @@ class _SigninUserAndPasswordState extends State<SigninUserAndPassword> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: TextFormField(
                     controller: this._textEditingControllerUser,
+                    onChanged: model.setEmail,
                     keyboardType: TextInputType.emailAddress,
                     style: TextStyle(
                         color: widget.textColor ?? Color(0xFF0F2E48),
@@ -180,6 +189,7 @@ class _SigninUserAndPasswordState extends State<SigninUserAndPassword> {
                 child: TextFormField(
                     focusNode: focus,
                     controller: this._textEditingControllerPassword,
+                    onChanged: model.setPassword,
                     obscureText: this.isNoVisiblePassword,
                     style: TextStyle(
                         color: widget.textColor ?? Color(0xFF0F2E48),
@@ -259,6 +269,7 @@ class _SigninUserAndPasswordState extends State<SigninUserAndPassword> {
                     )
                   : GestureDetector(
                       onTap: () {
+                        model.login(context);
                         widget.callLogin(
                             context,
                             setIsRequest,

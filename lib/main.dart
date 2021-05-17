@@ -1,13 +1,14 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:ipresent/app/locator.dart';
-import 'package:ipresent/login/login_user_password.dart';
+import 'package:ipresent/login/sign_In.dart';
 import 'package:ipresent/login/resetPassword.dart';
 import 'package:ipresent/login/sign_Up.dart';
 import 'package:ipresent/models/sign_Up_model.dart';
 import 'package:ipresent/login/signinScreen.dart';
 import 'package:ipresent/login/footer_Signin.dart';
 import 'package:ipresent/login/type_login.dart';
+import 'package:ipresent/util/snackbar_ui.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,7 +16,7 @@ void main() async {
   await Firebase.initializeApp();
   //await FlutterConfig.loadEnvVariables();
   setupLocator();
-  //setupSnackbarUi();
+  setupSnackbarUi();
   runApp(MyApp());
 }
 
