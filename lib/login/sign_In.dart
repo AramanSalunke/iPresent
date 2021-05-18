@@ -60,7 +60,7 @@ class _SigninUserAndPasswordState extends State<SigninUserAndPassword> {
         // onModelReady: (model) => model.getUserInfo(),
         builder: (context, model, child) => Scaffold(
               appBar: AppBar(
-                iconTheme: IconThemeData(color: Colors.white),
+                // iconTheme: IconThemeData(color: Colors.white),
                 backgroundColor: widget.backgroundColor ?? Color(0xFFE7004C),
                 centerTitle: true,
                 elevation: 0,
