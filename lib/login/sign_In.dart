@@ -119,7 +119,7 @@ class _SigninUserAndPasswordState extends State<SigninUserAndPassword> {
                           )),
                       child: buildBody(model),
                     ),
-                  )
+                  ),
                 ],
               ),
             ));
@@ -371,7 +371,7 @@ class _SigninUserAndPasswordState extends State<SigninUserAndPassword> {
         Align(
           alignment: Alignment.bottomCenter,
           child: widget.widgetFooter,
-        )
+        ),
       ],
     );
   }

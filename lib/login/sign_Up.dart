@@ -138,7 +138,7 @@ class _SignUpState extends State<SignUp> {
                       focusedBorder: OutlineInputBorder(
                           gapPadding: 0.0,
                           borderSide:
-                              BorderSide(width: 2, color: Colors.pink[300]!),
+                              BorderSide(width: 2, color: Colors.teal[300]!),
                           borderRadius: BorderRadius.all(Radius.circular(30))),
                       enabledBorder: OutlineInputBorder(
                           gapPadding: 1.0,
@@ -167,7 +167,7 @@ class _SignUpState extends State<SignUp> {
                       focusedBorder: OutlineInputBorder(
                           gapPadding: 0.0,
                           borderSide:
-                              BorderSide(width: 2, color: Colors.pink[300]!),
+                              BorderSide(width: 2, color: Colors.teal[300]!),
                           borderRadius: BorderRadius.all(Radius.circular(30))),
                       enabledBorder: OutlineInputBorder(
                           gapPadding: 1.0,
@@ -196,7 +196,7 @@ class _SignUpState extends State<SignUp> {
                       focusedBorder: OutlineInputBorder(
                           gapPadding: 0.0,
                           borderSide:
-                              BorderSide(width: 2, color: Colors.pink[300]!),
+                              BorderSide(width: 2, color: Colors.teal[300]!),
                           borderRadius: BorderRadius.all(Radius.circular(30))),
                       enabledBorder: OutlineInputBorder(
                           gapPadding: 1.0,
@@ -251,7 +251,7 @@ class _SignUpState extends State<SignUp> {
                       focusedBorder: OutlineInputBorder(
                           gapPadding: 0.0,
                           borderSide:
-                              BorderSide(width: 2.0, color: Colors.pink[300]!),
+                              BorderSide(width: 2.0, color: Colors.teal[300]!),
                           borderRadius: BorderRadius.all(Radius.circular(30))),
                       enabledBorder: OutlineInputBorder(
                           gapPadding: 1.0,
@@ -281,7 +281,7 @@ class _SignUpState extends State<SignUp> {
                       focusedBorder: OutlineInputBorder(
                           gapPadding: 0.0,
                           borderSide:
-                              BorderSide(width: 2.0, color: Colors.pink[300]!),
+                              BorderSide(width: 2.0, color: Colors.teal[300]!),
                           borderRadius: BorderRadius.all(Radius.circular(30))),
                       enabledBorder: OutlineInputBorder(
                           gapPadding: 1.0,
@@ -307,6 +307,10 @@ class _SignUpState extends State<SignUp> {
             : GestureDetector(
                 onTap: () {
                   model.register();
+                  // widget.funSignUp!(
+                  //   context,
+                  //   setIsRequest,
+                  // );
                 },
                 child: SizedBox(
                   height: MediaQuery.of(context).size.height * 0.07,
