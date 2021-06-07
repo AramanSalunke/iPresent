@@ -20,31 +20,38 @@ class _Settings_ScreenState extends State<Settings_Screen> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(18.0),
-        child: Column(
-          children: [
-            NeumorphicButton(
-              child: Text(
-                'Log Out',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.black,
+        padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
+        child: Center(
+          child: Column(
+            children: [
+              NeumorphicButton(
+                child: Text(
+                  'Log Out',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black,
+                  ),
+                ),
+                onPressed: () {
+                  print("onClick");
+                },
+                style: NeumorphicStyle(
+                  shadowLightColor: Colors.black45,
+                  color: Color(0xFFF3F3F5).withOpacity(0.8),
+                  shape: NeumorphicShape.concave,
+                  boxShape:
+                      NeumorphicBoxShape.roundRect(BorderRadius.circular(20)),
+                ),
+                padding: EdgeInsets.fromLTRB(
+                  MediaQuery.of(context).size.width * 0.35,
+                  MediaQuery.of(context).size.height * 0.02,
+                  MediaQuery.of(context).size.width * 0.35,
+                  MediaQuery.of(context).size.height * 0.02,
                 ),
               ),
-              onPressed: () {
-                print("onClick");
-              },
-              style: NeumorphicStyle(
-                shadowLightColor: Colors.black45,
-                color: Color(0xFFF3F3F5).withOpacity(0.8),
-                shape: NeumorphicShape.concave,
-                boxShape:
-                    NeumorphicBoxShape.roundRect(BorderRadius.circular(20)),
-              ),
-              padding: const EdgeInsets.fromLTRB(145.0, 15.0, 145.0, 15.0),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       // Container(
