@@ -118,18 +118,18 @@ class Attendance extends ChangeNotifier {
 //"deviceId": "${this.userEmail}",
       "date": DateTime.now(),
       "deviceName": "${device!.name}",
-      "EventDateTime": "${now}",
+      //"EventDateTime": "${now}",
       "Latitude": "${this.latitude}",
       "Longitude": "${this.longitude}",
       "Altitude": "${this.altitude}",
-      "MorningOutdoor": "${this.morningOutdoor}",
-      "AfternoonOutdoor": "${this.afternoonOutdoor}",
-      "Reason": "${this.currentReason}",
-      "Comments": "${this.comments}",
-      "UpdateTimestamp": "{'.sv': 'timestamp'}",
+      // "MorningOutdoor": "${this.morningOutdoor}",
+      // "AfternoonOutdoor": "${this.afternoonOutdoor}",
+      //"Reason": "${this.currentReason}",
+      //"Comments": "${this.comments}",
+      //"UpdateTimestamp": "{'.sv': 'timestamp'}",
       "Version": "${software!.version}",
-      "Build": "${software!.build}",
-      "Package": "${software!.packageName}"
+      //"Build": "${software!.build}",
+      //"Package": "${software!.packageName}"
     };
     Helper.write('Following data will be sent...');
     Helper.write(data.toString());

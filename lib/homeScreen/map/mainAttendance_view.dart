@@ -354,7 +354,8 @@ class _CenterFabExampleState extends State<CenterFabExample> {
 
 class FingerPrint extends StatefulWidget {
   AttendanceViewModel? model;
-  FingerPrint({this.model});
+  bool? isPesent;
+  FingerPrint({this.model, this.isPesent = false});
 
   @override
   _FingerPrintState createState() => _FingerPrintState();
@@ -422,8 +423,9 @@ class _FingerPrintState extends State<FingerPrint>
       child: Stack(
         children: <Widget>[
           GestureDetector(
-            onLongPressStart: _onLongPressStart,
-            onLongPressEnd: _onLongPressEnd,
+            onLongPressStart:
+                widget.isPesent == false ? _onLongPressStart : null,
+            onLongPressEnd: widget.isPesent == false ? _onLongPressEnd : null,
             child: AnimatedBuilder(
                 animation: _controller!,
                 builder: (_, child) {
@@ -441,7 +443,7 @@ class _FingerPrintState extends State<FingerPrint>
                         children: <Widget>[
                           CircularProgres(value: _controller!.value),
                           Container(
-                            child: showFingerPrint
+                            child: showFingerPrint || widget.isPesent == true
                                 ? Center(
                                     child: Icon(
                                       Icons.check_circle,
@@ -470,7 +472,7 @@ class _FingerPrintState extends State<FingerPrint>
                   );
                 }),
             onLongPress: () {
-              widget.model!.register(context);
+              widget.isPesent == false ? widget.model!.register(context) : null;
             },
           ),
         ],

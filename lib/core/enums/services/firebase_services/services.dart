@@ -9,5 +9,6 @@ abstract class Services {
   FirebaseAuth auth() => _auth;
   FirebaseStorage storage() => _storage;
   User user() => _firebaseUser();
+  // ignore: unnecessary_null_comparison
   bool isUserLoggedIn() => _firebaseUser() != null;
 }

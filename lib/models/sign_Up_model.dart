@@ -62,20 +62,24 @@ class SignUpModel extends BaseViewModel {
   }
 
   register(BuildContext context) async {
-    isSuccess = false;
+    //isSuccess = false;
     if (validatePassword() == true) {
       //await _sharedPreferencesHelper.clearAllData();
+      //String userUid = await _authServices.user().uid;
+      // print("userUID=$userUid");
+      FirebaseAuthResults authResults =
+          await _authServices.signUp(email!, password!);
       String userUid = await _authServices.user().uid;
-      print("userUID=$userUid");
       Map<String, dynamic> data = {
         'firstName': name,
         'LastName': surname,
         'email': email,
+        'uuid': userUid,
       };
-      FirebaseAuthResults authResults =
-          await _authServices.signUp(email!, password!);
       docreferance.doc(userUid).set(data);
       if (authResults == FirebaseAuthResults.Success) {
+        isSuccess = true;
+        notifyListeners();
         await _snackbarService.showCustomSnackBar(
           message: "Signed Up Successfully",
           duration: Duration(seconds: 4),
@@ -88,7 +92,7 @@ class SignUpModel extends BaseViewModel {
 
         // AutoRoute(path: '/SigninUserAndPassword/*', page: SigninUserAndPassword);
 
-        notifyListeners();
+        //notifyListeners();
       } else {
         await _snackbarService.showCustomSnackBar(
           message: _errorType(authResults),

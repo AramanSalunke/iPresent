@@ -702,6 +702,7 @@ class _HomeScreenState extends State<HomeScreen>
                 child: Container(
                   child: FingerPrint(
                     model: model,
+                    isPesent: model.getAttendance,
                   ),
                   margin: EdgeInsets.only(
                       top: MediaQuery.of(context).size.height * 0.41),

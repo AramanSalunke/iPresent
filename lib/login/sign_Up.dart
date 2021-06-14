@@ -308,8 +308,8 @@ class _SignUpState extends State<SignUp> {
                 ),
               )
             : GestureDetector(
-                onTap: () {
-                  model.register(context);
+                onTap: () async {
+                  await model.register(context);
                   if (model.getIsSuccess == true) {
                     Navigator.push(
                       context,
