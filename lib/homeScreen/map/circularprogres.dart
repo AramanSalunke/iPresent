@@ -11,7 +11,10 @@ class CircularProgres extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomPaint(
       foregroundPainter: CircularBar(
-          offset: Offset(40, 40), endAngle: (pi * 2 * value!), radius: 40),
+          offset: Offset(MediaQuery.of(context).size.width * 0.103,
+              MediaQuery.of(context).size.height * 0.0478),
+          endAngle: (pi * 2 * value!),
+          radius: MediaQuery.of(context).size.height * 0.048),
     );
   }
 }
@@ -25,7 +28,7 @@ class CircularBar extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var p = Paint()
-      //..color = Colors.blue[900]
+      ..color = Colors.blue[900]!
       ..strokeWidth = 6
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke;

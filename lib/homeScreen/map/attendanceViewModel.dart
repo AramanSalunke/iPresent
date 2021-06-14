@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:ipresent/homeScreen/map/attendance.dart';
 import 'package:ipresent/splash_Screen/splash_screen_model.dart';
@@ -19,6 +21,8 @@ class AttendanceViewModel extends BaseViewModel {
   final Geolocator geolocator = Geolocator();
   SnackbarService _snackbarService = locator<SnackbarService>();
   AuthServices _authServices = locator<AuthServices>();
+  final CollectionReference docreferance =
+      FirebaseFirestore.instance.collection("Users");
 
   LocationData? _currentLocationData;
   Position? currentPosition;
@@ -49,13 +53,13 @@ class AttendanceViewModel extends BaseViewModel {
     });
   }
 
-  register(AppUser user, BuildContext context) async {
+  register(BuildContext context) async {
     LocationPermission permission = await Geolocator.requestPermission();
     print("permition=$permission");
     await setLocation();
     _attandance = new Attendance();
-    await _attandance!.register(user, _latitude!, _longitude!, _altitude!,
-        _authServices.currentUserEmail().toString());
+    await _attandance!.register(_latitude!, _longitude!, _altitude!,
+        _authServices.user().uid.toString());
     status = _attandance!.outputText;
     dateTime = DateTime.now().toString();
     greetings = greeting();
