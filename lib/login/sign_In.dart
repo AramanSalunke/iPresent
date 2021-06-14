@@ -20,7 +20,7 @@ class SigninUserAndPassword extends StatefulWidget {
   final bool? isSignUp;
   final Widget? signUp;
 
-  final Function callLogin;
+  final Function? callLogin;
   final SigninScreenWords? signinScreenWords;
 
   const SigninUserAndPassword(
@@ -33,7 +33,7 @@ class SigninUserAndPassword extends StatefulWidget {
       this.widgetResetPassword,
       this.isSignUp,
       this.signUp,
-      required this.callLogin,
+      this.callLogin,
       this.signinScreenWords});
   @override
   _SigninUserAndPasswordState createState() => _SigninUserAndPasswordState();
@@ -195,7 +195,7 @@ class _SigninUserAndPasswordState extends State<SigninUserAndPassword> {
                         color: widget.textColor ?? Color(0xFF0F2E48),
                         fontSize: 14),
                     onFieldSubmitted: (value) {
-                      widget.callLogin(
+                      widget.callLogin!(
                           context,
                           setIsRequest,
                           this._textEditingControllerUser.text,
@@ -270,7 +270,7 @@ class _SigninUserAndPasswordState extends State<SigninUserAndPassword> {
                   : GestureDetector(
                       onTap: () {
                         model.login(context);
-                        widget.callLogin(
+                        widget.callLogin!(
                             context,
                             setIsRequest,
                             this._textEditingControllerPassword.text,

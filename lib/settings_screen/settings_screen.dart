@@ -17,6 +17,7 @@ class _Settings_ScreenState extends State<Settings_Screen> {
         backgroundColor: Color(0xFFE7004C),
         title: Text(
           'Settings',
+          style: TextStyle(fontSize: 18),
         ),
       ),
       body: Padding(

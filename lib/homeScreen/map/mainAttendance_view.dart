@@ -8,6 +8,7 @@ import 'package:ipresent/homeScreen/map/flutter_mao_location.dart';
 import 'package:ipresent/models/user.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flutter_map/flutter_map.dart';
 
@@ -109,7 +110,7 @@ class _AttendanceScreenState extends State<AttendanceScreen>
                       SizedBox(
                         height: 20,
                       ),
-                      buttonRegisterAttendance(context: context, model: model),
+                      // buttonRegisterAttendance(context: context, model: model),
                       SizedBox(
                         height: 10,
                       ),
@@ -178,6 +179,7 @@ class _AttendanceScreenState extends State<AttendanceScreen>
                             child: model.latitude != null
                                 ? Row(
                                     // crossAxisAlignment: CrossAxisAlignment.start,
+
                                     children: [
                                         Icon(
                                           Icons.location_on,
@@ -196,64 +198,73 @@ class _AttendanceScreenState extends State<AttendanceScreen>
             ));
   }
 
-  Widget buttonRegisterAttendance(
-      {BuildContext? context, AttendanceViewModel? model}) {
-    return Center(
-        child: Container(
-      color: Colors.lightBlue[50],
-      alignment: Alignment.center,
-      child: Stack(
-        children: <Widget>[
-          GestureDetector(
-            onLongPressStart: _onLongPressStart,
-            onLongPressEnd: _onLongPressEnd,
-            child: AnimatedBuilder(
-                animation: _controller!,
-                builder: (_, child) {
-                  return Transform.scale(
-                    scale: ((_controller!.value * 0.2) + 1),
-                    child: Container(
-                      width: 100,
-                      padding: EdgeInsets.all(10),
-                      height: 100,
-                      child: Stack(
-                        children: <Widget>[
-                          CircularProgres(value: _controller!.value),
-                          Container(
-                            child: showFingerPrint
-                                ? Center(
-                                    child: Icon(
-                                      Icons.check_circle,
-                                      color: Colors.blue[900],
-                                      size: 50,
-                                    ),
-                                  )
-                                : FingerPrintIcon(value: _controller!.value),
-                          )
-                        ],
-                      ),
-                      decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.blue[100]!,
-                              blurRadius: 10,
-                              spreadRadius: 3,
-                              offset: Offset(16, 16)),
-                        ],
-                        shape: BoxShape.circle,
-                        color: Colors.white,
-                      ),
-                    ),
-                  );
-                }),
-            onLongPress: () {
-              model!.register(widget.user!, context!);
-            },
-          ),
-        ],
-      ),
-    ));
-  }
+  // Widget buttonRegisterAttendance(
+  //     {BuildContext? context, AttendanceViewModel? model}) {
+  //   return Center(
+  //       child: Container(
+  //     decoration: BoxDecoration(
+  //       borderRadius: BorderRadius.circular(35),
+  //       //  color: Colors.blue,
+  //     ),
+  //     alignment: Alignment.center,
+  //     child: Stack(
+  //       children: <Widget>[
+  //         GestureDetector(
+  //           onLongPressStart: _onLongPressStart,
+  //           onLongPressEnd: _onLongPressEnd,
+  //           child: AnimatedBuilder(
+  //               animation: _controller!,
+  //               builder: (_, child) {
+  //                 return Transform.scale(
+  //                   scale: ((_controller!.value * 0.2) + 1),
+  //                   child: Container(
+  //                     width: MediaQuery.of(context!).size.width,
+  //                     padding: EdgeInsets.only(
+  //                         top: MediaQuery.of(context).size.height * 0.018,
+  //                         bottom: MediaQuery.of(context).size.height * 0.018,
+  //                         right: MediaQuery.of(context).size.height * 0.018,
+  //                         left: MediaQuery.of(context).size.height * 0.018),
+  //                     height: MediaQuery.of(context).size.height,
+  //                     child: Stack(
+  //                       children: <Widget>[
+  //                         CircularProgres(value: _controller!.value),
+  //                         Container(
+  //                           child: showFingerPrint
+  //                               ? Center(
+  //                                   child: Icon(
+  //                                     Icons.check_circle,
+  //                                     color: Colors.greenAccent[400],
+  //                                     size: MediaQuery.of(context).size.height *
+  //                                         0.08,
+  //                                   ),
+  //                                 )
+  //                               : FingerPrintIcon(value: _controller!.value),
+  //                         )
+  //                       ],
+  //                     ),
+  //                     decoration: BoxDecoration(
+  //                       borderRadius: BorderRadius.circular(45),
+  //                       boxShadow: [
+  //                         // BoxShadow(
+  //                         //     color: Colors.blue[100]!,
+  //                         //     blurRadius: 10,
+  //                         //     spreadRadius: 3,
+  //                         //     offset: Offset(16, 16)),
+  //                       ],
+  //                       // shape: BoxShape.circle,
+  //                       color: Color(0xFFF3F3F5),
+  //                     ),
+  //                   ),
+  //                 );
+  //               }),
+  //           onLongPress: () {
+  //             model!.register(context!);
+  //           },
+  //         ),
+  //       ],
+  //     ),
+  //   ));
+  //}
 
   handelOnPress() {
     setState(() {
@@ -342,6 +353,9 @@ class _CenterFabExampleState extends State<CenterFabExample> {
 }
 
 class FingerPrint extends StatefulWidget {
+  AttendanceViewModel? model;
+  FingerPrint({this.model});
+
   @override
   _FingerPrintState createState() => _FingerPrintState();
 }
@@ -399,57 +413,67 @@ class _FingerPrintState extends State<FingerPrint>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        color: Colors.lightBlue[50],
-        alignment: Alignment.center,
-        child: Stack(
-          children: <Widget>[
-            GestureDetector(
-              onLongPressStart: _onLongPressStart,
-              onLongPressEnd: _onLongPressEnd,
-              child: AnimatedBuilder(
-                  animation: _controller!,
-                  builder: (_, child) {
-                    return Transform.scale(
-                      scale: ((_controller!.value * 0.2) + 1),
-                      child: Container(
-                        width: 100,
-                        padding: EdgeInsets.all(10),
-                        height: 100,
-                        child: Stack(
-                          children: <Widget>[
-                            CircularProgres(value: _controller!.value),
-                            Container(
-                              child: showFingerPrint
-                                  ? Center(
-                                      child: Icon(
-                                        Icons.check_circle,
-                                        color: Colors.blue[900],
-                                        size: 50,
-                                      ),
-                                    )
-                                  : FingerPrintIcon(value: _controller!.value),
-                            )
-                          ],
-                        ),
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.blue[100]!,
-                                blurRadius: 10,
-                                spreadRadius: 3,
-                                offset: Offset(16, 16)),
-                          ],
-                          shape: BoxShape.circle,
-                          color: Colors.white,
-                        ),
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(35),
+        //  color: Colors.blue,
+      ),
+      alignment: Alignment.center,
+      child: Stack(
+        children: <Widget>[
+          GestureDetector(
+            onLongPressStart: _onLongPressStart,
+            onLongPressEnd: _onLongPressEnd,
+            child: AnimatedBuilder(
+                animation: _controller!,
+                builder: (_, child) {
+                  return Transform.scale(
+                    scale: ((_controller!.value * 0.2) + 1),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      padding: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height * 0.018,
+                          bottom: MediaQuery.of(context).size.height * 0.018,
+                          right: MediaQuery.of(context).size.height * 0.018,
+                          left: MediaQuery.of(context).size.height * 0.018),
+                      height: MediaQuery.of(context).size.height,
+                      child: Stack(
+                        children: <Widget>[
+                          CircularProgres(value: _controller!.value),
+                          Container(
+                            child: showFingerPrint
+                                ? Center(
+                                    child: Icon(
+                                      Icons.check_circle,
+                                      color: Colors.greenAccent[700],
+                                      size: MediaQuery.of(context).size.height *
+                                          0.08,
+                                    ),
+                                  )
+                                : FingerPrintIcon(value: _controller!.value),
+                          )
+                        ],
                       ),
-                    );
-                  }),
-            ),
-          ],
-        ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(45),
+                        boxShadow: [
+                          // BoxShadow(
+                          //     color: Colors.blue[100]!,
+                          //     blurRadius: 10,
+                          //     spreadRadius: 3,
+                          //     offset: Offset(16, 16)),
+                        ],
+                        //shape: BoxShape.circle,
+                        color: Color(0xFFF3F3F5),
+                      ),
+                    ),
+                  );
+                }),
+            onLongPress: () {
+              widget.model!.register(context);
+            },
+          ),
+        ],
       ),
     );
   }
@@ -465,14 +489,19 @@ class FingerPrintIcon extends StatelessWidget {
       alignment: Alignment.center,
       children: <Widget>[
         Center(
-          child: Icon(
-            Icons.fingerprint,
-            color: Colors.blue,
-            size: 50,
+          child: Shimmer.fromColors(
+            direction: ShimmerDirection.btt,
+            baseColor: Colors.blue,
+            highlightColor: Colors.grey[200]!,
+            child: Icon(
+              Icons.fingerprint,
+              color: Colors.blue,
+              size: MediaQuery.of(context).size.height * 0.09,
+            ),
           ),
         ),
         Positioned(
-          bottom: 15,
+          bottom: MediaQuery.of(context).size.height * 0.002,
           child: ClipRect(
             child: Align(
               alignment: Alignment.bottomCenter,
@@ -480,7 +509,7 @@ class FingerPrintIcon extends StatelessWidget {
               child: Icon(
                 Icons.fingerprint,
                 color: Colors.blue[900],
-                size: 50,
+                size: MediaQuery.of(context).size.height * 0.09,
               ),
             ),
           ),

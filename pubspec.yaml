@@ -25,6 +25,8 @@ dependencies:
     sdk: flutter
   shared_preferences: ^2.0.5
   recase: ^4.0.0
+  shimmer: ^2.0.0
+  cool_alert: ^1.1.0
   #maps
   geolocator: ^7.0.3
   latlong2: ^0.8.0
@@ -40,8 +42,13 @@ dependencies:
   dio: ^4.0.0
   flutter_polyline_points: ^1.0.0
   google_maps_flutter: ^2.0.6
-  #flutter_maps: ^0.1.0
   
+  #dashboard
+  fl_chart: ^0.36.1
+  cupertino_icons: ^1.0.3
+  google_fonts: ^2.1.0
+  flutter_svg: ^0.22.0
+
   #Firebase
   firebase_core: ^1.1.0
   firebase_auth: ^1.1.2
@@ -62,7 +69,7 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
+  
   flutter_neumorphic: ^3.1.0
   flutter_animarker: ^3.2.0
 
@@ -84,6 +91,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
+    - assets/icons/
+    - assets/images/
   
 
   # An image asset can refer to one or more resolution-specific "variants", see

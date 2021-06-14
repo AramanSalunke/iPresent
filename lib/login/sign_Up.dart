@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ipresent/login/SigninScreenWords.dart';
+import 'package:ipresent/login/footer_Signin.dart';
+import 'package:ipresent/login/resetPassword.dart';
+import 'package:ipresent/login/sign_In.dart';
 import 'package:ipresent/models/sign_Up_model.dart';
 import 'package:ipresent/login/loadingSignUp.dart';
 
@@ -306,7 +309,14 @@ class _SignUpState extends State<SignUp> {
               )
             : GestureDetector(
                 onTap: () {
-                  model.register();
+                  model.register(context);
+                  if (model.getIsSuccess == true) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => widgetSigninUserPassword()),
+                    );
+                  }
                   // widget.funSignUp!(
                   //   context,
                   //   setIsRequest,
@@ -335,6 +345,67 @@ class _SignUpState extends State<SignUp> {
               ),
         widget.widgetFooter!
       ],
+    );
+  }
+
+  Widget widgetSigninUserPassword() {
+    return SigninUserAndPassword(
+      callLogin: (BuildContext _context, Function isRequest, String user,
+          String password) {
+        isRequest(true);
+        Future.delayed(Duration(seconds: 2), () {
+          isRequest(false);
+        });
+      },
+      logo: 'assets/logo_header.png',
+      isFooter: true,
+      widgetFooter: this.widgetFooter(),
+      isResetPassword: true,
+      widgetResetPassword: this.widgetResetPassword(),
+      isSignUp: true,
+      signUp: this.widgetSigninScreenSignUP(),
+    );
+  }
+
+  Widget widgetFooter() {
+    return SigninScreenFooter(
+      logo: 'assets/logo_footer.png',
+      text: 'Powered by',
+      funFooterLogin: () {},
+    );
+  }
+
+  Widget widgetSigninScreenSignUP() {
+    return SignUp(
+      isFooter: true,
+      widgetFooter: this.widgetFooter(),
+      // logo: 'assets/logo_header.png',
+      funSignUp:
+          (BuildContext _context, Function isRequest, SignUpModel signUpModel) {
+        isRequest(true);
+        print(signUpModel.email);
+        print(signUpModel.password);
+        print(signUpModel.repeatPassword);
+        print(signUpModel.surname);
+        print(signUpModel.name);
+
+        isRequest(false);
+      },
+    );
+  }
+
+  Widget widgetResetPassword() {
+    return ResetPassword(
+      logo: 'assets/logo_header.png',
+      funResetPassword:
+          (BuildContext _context, Function isRequest, String email) {
+        isRequest(true);
+        Future.delayed(Duration(seconds: 2), () {
+          isRequest(false);
+        });
+      },
+      isFooter: true,
+      widgetFooter: this.widgetFooter(),
     );
   }
 

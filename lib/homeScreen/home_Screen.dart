@@ -1,15 +1,17 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:ipresent/dashboard_screen/dash_board_screen.dart';
+import 'package:ipresent/history/history_Screen.dart';
 import 'package:ipresent/homeScreen/map/attendanceViewModel.dart';
 
 import 'package:ipresent/homeScreen/map/mainAttendance_view.dart';
 import 'package:ipresent/login/footer_Signin.dart';
 import 'package:ipresent/login/signinScreenWords.dart';
+import 'package:ipresent/notificationScreen/notification_screen.dart';
 import 'package:ipresent/settings_screen/settings_screen.dart';
 import 'package:ipresent/shapes/card1.dart';
 import 'package:ipresent/shapes/card2.dart';
@@ -27,20 +29,47 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen>
+    with SingleTickerProviderStateMixin {
   SigninScreenWords? signinScreenWords;
+
   final List<_PositionItem> _positionItems = <_PositionItem>[];
   StreamSubscription<Position>? _positionStreamSubscription;
   AttendanceViewModel _attendanceViewModel = AttendanceViewModel();
 
   LatLng? latlong;
-
   GoogleMapController? _controller;
 
+  AnimationController? _animationController;
   @override
   void initState() {
     super.initState();
+
+    _animationController = new AnimationController(
+      duration: const Duration(milliseconds: 400),
+      vsync: this,
+    );
   }
+
+  _onLongPressStart(LongPressStartDetails details) {
+    if (!_animationController!.isAnimating) {
+      _animationController!.forward();
+    } else {
+      _animationController!.forward(from: _animationController!.value);
+    }
+  }
+
+  _onLongPressEnd(LongPressEndDetails details) {
+    _animationController!.reverse();
+  }
+
+  // void _onMapCreated(GoogleMapController controller) {
+  //   setState(() {
+  //     _controller = (controller);
+  //     _controller!.animateCamera(CameraUpdate.newCameraPosition(
+  //         CameraPosition(target: LatLng(16.3493846, 74.374676), zoom: 14)));
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -133,22 +162,26 @@ class _HomeScreenState extends State<HomeScreen> {
                                     alignment: Alignment.center,
                                     children: [
                                       GoogleMap(
+                                        myLocationEnabled: true,
+                                        myLocationButtonEnabled: true,
                                         initialCameraPosition: CameraPosition(
                                             target: LatLng(model.latitude,
                                                 model.longitude),
-                                            zoom: 14.0),
+                                            zoom: 18),
                                         onMapCreated:
+                                            //_onMapCreated,
                                             (GoogleMapController controller) {
                                           _controller = (controller);
+
                                           _controller!.animateCamera(
                                               CameraUpdate.newCameraPosition(
                                                   CameraPosition(
                                                       target: LatLng(
                                                           model.latitude,
                                                           model.longitude),
-                                                      zoom: 14)));
+                                                      zoom: 18)));
                                         },
-                                        //  markers: _markers,
+                                        // markers: _markers,
                                         onCameraIdle: () {
                                           setState(() {});
                                         },
@@ -181,57 +214,66 @@ class _HomeScreenState extends State<HomeScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Positioned.fill(
-                                child: CustomPaint(
-                                  child: Column(
-                                    children: [
-                                      Center(
-                                        child: Padding(
+                                child: InkWell(
+                                  highlightColor: Colors.amber,
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (_buildContest) =>
+                                                HistoryScreen()));
+                                  },
+                                  child: CustomPaint(
+                                    child: Column(
+                                      children: [
+                                        Center(
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                                top: MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.03,
+                                                left: MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.04,
+                                                right: MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.04),
+                                            child: Image.asset(
+                                              'assets/history.png',
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.07,
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.07,
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
                                           padding: EdgeInsets.only(
-                                              top: MediaQuery.of(context)
+                                              bottom: MediaQuery.of(context)
                                                       .size
                                                       .height *
-                                                  0.03,
-                                              left: MediaQuery.of(context)
+                                                  0.03),
+                                          child: Text(
+                                            'History',
+                                            style: TextStyle(
+                                              fontSize: MediaQuery.of(context)
                                                       .size
                                                       .height *
-                                                  0.04,
-                                              right: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.04),
-                                          child: Image.asset(
-                                            'assets/history.png',
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.07,
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.07,
+                                                  0.018,
+                                              color: Colors.orange[700],
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                            bottom: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.03),
-                                        child: Text(
-                                          'History',
-                                          style: TextStyle(
-                                            fontSize: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.018,
-                                            color: Colors.orange[700],
-                                          ),
-                                        ),
-                                      )
-                                    ],
+                                        )
+                                      ],
+                                    ),
+                                    painter: RPSCustomCard1(),
                                   ),
-                                  painter: RPSCustomCard1(),
                                 ),
                               ),
                               // NeumorphicButton(
@@ -278,63 +320,90 @@ class _HomeScreenState extends State<HomeScreen> {
                               //     ],
                               //   ),
                               // ),
-                              Positioned.fill(
-                                child: CustomPaint(
-                                  child: Column(
-                                    children: [
-                                      Center(
-                                        child: Padding(
-                                          padding: EdgeInsets.only(
-                                              top: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.03,
-                                              left: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.04,
-                                              right: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.04),
-                                          child: Image.asset(
-                                            'assets/notification_bell.png',
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.07,
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.07,
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                            bottom: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.03),
-                                        child: Text(
-                                          'Notification',
-                                          style: TextStyle(
-                                            fontSize: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.018,
-                                            color: Colors.orange[700],
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
 
-                                  // size: Size(
-                                  //     MediaQuery.of(context).size.width * 0.35,
-                                  //     (MediaQuery.of(context).size.width * 0.35)
-                                  //         .toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
-                                  painter: RPSCustomCard2(),
+                              Positioned.fill(
+                                child: InkWell(
+                                  highlightColor: Colors.amber,
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (_buildContest) =>
+                                                NotificationScreen()));
+                                  },
+                                  child: AnimatedBuilder(
+                                    animation: _animationController!,
+                                    builder: (_, child) {
+                                      return Transform.scale(
+                                        scale: ((_animationController!.value *
+                                                0.08) +
+                                            1),
+                                        child: CustomPaint(
+                                          child: Column(
+                                            children: [
+                                              Center(
+                                                child: Padding(
+                                                  padding: EdgeInsets.only(
+                                                      top:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height *
+                                                              0.03,
+                                                      left:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height *
+                                                              0.04,
+                                                      right:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height *
+                                                              0.04),
+                                                  child: Image.asset(
+                                                    'assets/notification_bell.png',
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height *
+                                                            0.07,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height *
+                                                            0.07,
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsets.only(
+                                                    bottom:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height *
+                                                            0.03),
+                                                child: Text(
+                                                  'Notification',
+                                                  style: TextStyle(
+                                                    fontSize:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height *
+                                                            0.018,
+                                                    color: Colors.orange[700],
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+
+                                          // size: Size(
+                                          //     MediaQuery.of(context).size.width * 0.35,
+                                          //     (MediaQuery.of(context).size.width * 0.35)
+                                          //         .toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
+                                          painter: RPSCustomCard2(),
+                                        ),
+                                      );
+                                    },
+                                  ),
                                 ),
                               ),
 
@@ -393,59 +462,68 @@ class _HomeScreenState extends State<HomeScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Positioned.fill(
-                                child: CustomPaint(
-                                  child: Column(
-                                    children: [
-                                      Center(
-                                        child: Padding(
+                                child: InkWell(
+                                  highlightColor: Colors.amber,
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (_buildContest) =>
+                                                DashBoardScreen()));
+                                  },
+                                  child: CustomPaint(
+                                    child: Column(
+                                      children: [
+                                        Center(
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                                top: MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.03,
+                                                left: MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.04,
+                                                right: MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.04),
+                                            child: Icon(
+                                              Icons.dashboard_rounded,
+                                              color: Colors.orange[800],
+                                              size: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.07,
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
                                           padding: EdgeInsets.only(
-                                              top: MediaQuery.of(context)
+                                              bottom: MediaQuery.of(context)
                                                       .size
                                                       .height *
-                                                  0.03,
-                                              left: MediaQuery.of(context)
+                                                  0.03),
+                                          child: Text(
+                                            'Dashboard',
+                                            style: TextStyle(
+                                              fontSize: MediaQuery.of(context)
                                                       .size
                                                       .height *
-                                                  0.04,
-                                              right: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.04),
-                                          child: Icon(
-                                            Icons.dashboard_rounded,
-                                            color: Colors.orange[800],
-                                            size: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.07,
+                                                  0.018,
+                                              color: Colors.orange[700],
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                            bottom: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.03),
-                                        child: Text(
-                                          'Dashboard',
-                                          style: TextStyle(
-                                            fontSize: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.018,
-                                            color: Colors.orange[700],
-                                          ),
-                                        ),
-                                      )
-                                    ],
+                                        )
+                                      ],
+                                    ),
+                                    // size: Size(
+                                    //   MediaQuery.of(context).size.width,
+                                    //   (MediaQuery.of(context).size.width * 0.4)
+                                    //       .toDouble(),
+                                    // ), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
+                                    painter: RPSCustomCard3(),
                                   ),
-                                  // size: Size(
-                                  //   MediaQuery.of(context).size.width,
-                                  //   (MediaQuery.of(context).size.width * 0.4)
-                                  //       .toDouble(),
-                                  // ), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
-                                  painter: RPSCustomCard3(),
                                 ),
                               ),
                               // NeumorphicButton(
@@ -490,64 +568,74 @@ class _HomeScreenState extends State<HomeScreen> {
                               //       ],
                               //     )),
                               Positioned.fill(
-                                child: CustomPaint(
-                                  child: Column(
-                                    children: [
-                                      Center(
-                                        child: Padding(
+                                child: InkWell(
+                                  highlightColor: Colors.amber,
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (_buildContest) =>
+                                                Settings_Screen()));
+                                  },
+                                  child: CustomPaint(
+                                    child: Column(
+                                      children: [
+                                        Center(
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                                top: MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.03,
+                                                left: MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.04,
+                                                right: MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.04),
+                                            child: Image.asset(
+                                              'assets/settings.png',
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.07,
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.07,
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
                                           padding: EdgeInsets.only(
-                                              top: MediaQuery.of(context)
+                                              bottom: MediaQuery.of(context)
                                                       .size
                                                       .height *
-                                                  0.03,
-                                              left: MediaQuery.of(context)
+                                                  0.03),
+                                          child: Text(
+                                            'Settings',
+                                            style: TextStyle(
+                                              fontSize: MediaQuery.of(context)
                                                       .size
                                                       .height *
-                                                  0.04,
-                                              right: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.04),
-                                          child: Image.asset(
-                                            'assets/settings.png',
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.07,
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.07,
+                                                  0.018,
+                                              color: Colors.orange[700],
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                            bottom: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.03),
-                                        child: Text(
-                                          'Settings',
-                                          style: TextStyle(
-                                            fontSize: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.018,
-                                            color: Colors.orange[700],
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
+                                        )
+                                      ],
+                                    ),
 
-                                  // size: Size(
-                                  //     MediaQuery.of(context).size.width * 0.35,
-                                  //     (MediaQuery.of(context).size.width * 0.35)
-                                  //         .toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
-                                  painter: RPSCustomCard4(),
+                                    // size: Size(
+                                    //     MediaQuery.of(context).size.width * 0.35,
+                                    //     (MediaQuery.of(context).size.width * 0.35)
+                                    //         .toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
+                                    painter: RPSCustomCard4(),
+                                  ),
                                 ),
                               ),
+
                               // NeumorphicButton(
                               //   margin: EdgeInsets.only(
                               //       left: MediaQuery.of(context).size.width * 0.04),
@@ -612,12 +700,15 @@ class _HomeScreenState extends State<HomeScreen> {
               Align(
                 alignment: Alignment.center,
                 child: Container(
+                  child: FingerPrint(
+                    model: model,
+                  ),
                   margin: EdgeInsets.only(
                       top: MediaQuery.of(context).size.height * 0.41),
                   decoration: BoxDecoration(
                     //shape: BoxShape.circle,
                     borderRadius: BorderRadius.circular(50),
-                    color: Color(0xFFF3F3F5).withOpacity(0.8),
+                    // color: Colors.yellow,
                   ),
                   height: MediaQuery.of(context).size.height * 0.13,
                   width: MediaQuery.of(context).size.width * 0.28,
@@ -625,15 +716,17 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-          floatingActionButton: FloatingActionButton(
-            backgroundColor: Colors.white,
-            foregroundColor: Colors.black,
-            onPressed: () => _controller!.animateCamera(
-              CameraUpdate.newCameraPosition(CameraPosition(
-                  target: LatLng(model.latitude, model.longitude), zoom: 18)),
-            ),
-            child: const Icon(Icons.center_focus_strong),
-          ),
+          // floatingActionButton: FloatingActionButton(
+          //   backgroundColor: Color(0xFFF3F3F5),
+          //   foregroundColor: Colors.black,
+          //   onPressed: () => _controller!.animateCamera(
+          //     CameraUpdate.newCameraPosition(
+          //       CameraPosition(
+          //           target: LatLng(model.latitude, model.longitude), zoom: 18),
+          //     ),
+          //   ),
+          //   child: const Icon(Icons.location_on_rounded),
+          // ),
         ),
       ),
     );
