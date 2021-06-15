@@ -12,8 +12,8 @@ import 'package:ipresent/homeScreen/map/software.dart';
 import 'package:ipresent/models/user.dart';
 
 class Attendance extends ChangeNotifier {
-  static const String C_URL_REGISTER_ATTENDANCE =
-      'https://mpresent.azurewebsites.net/api/attendance/register';
+  // static const String C_URL_REGISTER_ATTENDANCE =
+  //     'https://mpresent.azurewebsites.net/api/attendance/register';
 
   Device? device = new Device();
   Software? software = new Software();
@@ -81,7 +81,7 @@ class Attendance extends ChangeNotifier {
 
       Map<String, dynamic> commonData = getAttendanceRegistrationData();
 
-      Uri url = Uri.parse(C_URL_REGISTER_ATTENDANCE);
+      // Uri url = Uri.parse(C_URL_REGISTER_ATTENDANCE);
 
       Helper.write('About to send details to the server1213');
 
@@ -118,18 +118,18 @@ class Attendance extends ChangeNotifier {
 //"deviceId": "${this.userEmail}",
       "date": DateTime.now(),
       "deviceName": "${device!.name}",
-      "EventDateTime": "${now}",
+      //"EventDateTime": "${now}",
       "Latitude": "${this.latitude}",
       "Longitude": "${this.longitude}",
       "Altitude": "${this.altitude}",
-      "MorningOutdoor": "${this.morningOutdoor}",
-      "AfternoonOutdoor": "${this.afternoonOutdoor}",
-      "Reason": "${this.currentReason}",
-      "Comments": "${this.comments}",
-      "UpdateTimestamp": "{'.sv': 'timestamp'}",
+      // "MorningOutdoor": "${this.morningOutdoor}",
+      // "AfternoonOutdoor": "${this.afternoonOutdoor}",
+      //"Reason": "${this.currentReason}",
+      //"Comments": "${this.comments}",
+      //"UpdateTimestamp": "{'.sv': 'timestamp'}",
       "Version": "${software!.version}",
-      "Build": "${software!.build}",
-      "Package": "${software!.packageName}"
+      //"Build": "${software!.build}",
+      //"Package": "${software!.packageName}"
     };
     Helper.write('Following data will be sent...');
     Helper.write(data.toString());

@@ -29,6 +29,9 @@ class AttendanceViewModel extends BaseViewModel {
   String? _isoCountryCode = "";
 
   SplashScreenModel _splashScreenViewModel = SplashScreenModel();
+
+  bool isPresent = false;
+  get getAttendance => isPresent;
   Attendance? _attandance;
   double? _latitude = 00;
   double? _longitude = 00;
@@ -51,6 +54,7 @@ class AttendanceViewModel extends BaseViewModel {
       _altitude = currentPosition!.altitude;
       notifyListeners();
     });
+    await checkAtendance();
   }
 
   register(BuildContext context) async {
@@ -80,6 +84,32 @@ class AttendanceViewModel extends BaseViewModel {
     notifyListeners();
     await Future.delayed(Duration(seconds: 5));
     //await _splashScreenViewModel.startupLogic(context);
+  }
+
+  checkAtendance() async {
+    String userUid = await _authServices.user().uid;
+    var date = DateTime.now();
+    var compareDate = new DateTime(date.year, date.month, date.day);
+
+    docreferance
+        .doc(userUid)
+        .collection("Attendance")
+        .get()
+        .then((value) async {
+      if (value.docs.isNotEmpty) {
+        var attendaceQuery = await docreferance
+            .doc(userUid)
+            .collection("Attendance")
+            .where("date", isGreaterThanOrEqualTo: compareDate)
+            .get()
+            .then((snapshot) {
+          if (snapshot.size != 0) {
+            isPresent = true;
+            notifyListeners();
+          }
+        });
+      }
+    });
   }
 
   String greeting() {
