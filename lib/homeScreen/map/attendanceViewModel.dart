@@ -88,6 +88,9 @@ class AttendanceViewModel extends BaseViewModel {
 
   checkAtendance() async {
     String userUid = await _authServices.user().uid;
+    var date = DateTime.now();
+    var compareDate = new DateTime(date.year, date.month, date.day);
+
     docreferance
         .doc(userUid)
         .collection("Attendance")
@@ -97,10 +100,10 @@ class AttendanceViewModel extends BaseViewModel {
         var attendaceQuery = await docreferance
             .doc(userUid)
             .collection("Attendance")
-            .where("date", isGreaterThan: DateTime.now())
+            .where("date", isGreaterThanOrEqualTo: compareDate)
             .get()
             .then((snapshot) {
-          if (snapshot.size == 0) {
+          if (snapshot.size != 0) {
             isPresent = true;
             notifyListeners();
           }
