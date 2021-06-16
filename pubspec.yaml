@@ -48,6 +48,7 @@ dependencies:
   cupertino_icons: ^1.0.3
   google_fonts: ^2.1.0
   flutter_svg: ^0.22.0
+  velocity_x: ^3.2.0
 
   #Firebase
   firebase_core: ^1.1.0
