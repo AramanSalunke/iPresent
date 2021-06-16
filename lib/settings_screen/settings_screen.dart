@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:ipresent/constants/custom_appbar.dart';
 
 class Settings_Screen extends StatefulWidget {
   @override
   _Settings_ScreenState createState() => _Settings_ScreenState();
 }
 
-class _Settings_ScreenState extends State<Settings_Screen> {
+class _Settings_ScreenState extends State<Settings_Screen>
+    with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[350],
-      appBar: AppBar(
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: Color(0xFFE7004C),
-        title: Text(
-          'Settings',
-          style: TextStyle(fontSize: 18),
-        ),
+      // backgroundColor: Colors.grey[350],
+      appBar: CustomAppBar(
+        title: "Settings",
+        child: Icon(Icons.arrow_back_ios),
+        onPressed: () {
+          Navigator.pop(context);
+        },
       ),
       body: Padding(
         padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
