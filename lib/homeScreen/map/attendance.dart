@@ -76,6 +76,8 @@ class Attendance extends ChangeNotifier {
   void sendRequestToServer_AttendanceRegistration(String uid) async {
     Map<String, dynamic> serverResponse;
 
+    var date = DateTime.now();
+    var compareDate = new DateTime(date.year, date.month, date.day);
     try {
       Helper.write('Will now get attendance registration data');
 
@@ -85,7 +87,11 @@ class Attendance extends ChangeNotifier {
 
       Helper.write('About to send details to the server1213');
 
-      _collectionReference.doc(uid).collection("Attendance").add(commonData);
+      _collectionReference
+          .doc(uid)
+          .collection("Attendance")
+          .doc(date.toString())
+          .set(commonData);
 
       // Latitude : 18.4957177 Longitude : 73.9328679
 
