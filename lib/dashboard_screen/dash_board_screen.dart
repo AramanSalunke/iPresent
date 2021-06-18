@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ipresent/constants/custom_appbar.dart';
-import 'package:ipresent/dashboard/dashboard_screen.dart';
+import 'package:ipresent/dashboard/dashboard_View_screen.dart';
 import 'package:provider/provider.dart';
 
 class DashBoardScreen extends StatefulWidget {

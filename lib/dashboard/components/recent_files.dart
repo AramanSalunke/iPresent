@@ -4,7 +4,7 @@ import 'package:ipresent/dashboard/constants.dart';
 import 'package:ipresent/dashboard/models/RecentFile.dart';
 
 class RecentFiles extends StatelessWidget {
-  const RecentFiles({
+  RecentFiles({
     Key? key,
   }) : super(key: key);
 
@@ -19,10 +19,6 @@ class RecentFiles extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "Recent Files",
-            style: Theme.of(context).textTheme.subtitle1,
-          ),
           SizedBox(
             width: double.infinity,
             child: DataTable(
@@ -30,14 +26,19 @@ class RecentFiles extends StatelessWidget {
               columnSpacing: defaultPadding,
               columns: [
                 DataColumn(
-                  label: Text("File Name"),
+                  label: Text(
+                    "Attendance History",
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
                 ),
-                DataColumn(
-                  label: Text("Date"),
-                ),
-                DataColumn(
-                  label: Text("Size"),
-                ),
+                // DataColumn(
+                //   label: Text("Date"),
+                // ),
+                // DataColumn(
+                //   label: Text("Size"),
+                // ),
               ],
               rows: List.generate(
                 demoRecentFiles.length,
@@ -69,8 +70,8 @@ DataRow recentFileDataRow(RecentFile fileInfo) {
           ],
         ),
       ),
-      DataCell(Text(fileInfo.date!)),
-      DataCell(Text(fileInfo.size!)),
+      // DataCell(Text(fileInfo.date!)),
+      // DataCell(Text(fileInfo.size!)),
     ],
   );
 }
