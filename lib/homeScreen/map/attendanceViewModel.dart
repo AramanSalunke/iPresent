@@ -83,7 +83,7 @@ class AttendanceViewModel extends BaseViewModel {
           );
     notifyListeners();
     await Future.delayed(Duration(seconds: 5));
-    //await _splashScreenViewModel.startupLogic(context);
+    // await _splashScreenViewModel.startupLogic(context);
   }
 
   checkAtendance() async {

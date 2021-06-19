@@ -21,18 +21,18 @@ class MyFiles extends StatelessWidget {
               "My Files",
               style: Theme.of(context).textTheme.subtitle1,
             ),
-            ElevatedButton.icon(
-              style: TextButton.styleFrom(
-                padding: EdgeInsets.symmetric(
-                  horizontal: defaultPadding * 1.5,
-                  vertical:
-                      defaultPadding / (Responsive.isMobile(context) ? 2 : 1),
-                ),
-              ),
-              onPressed: () {},
-              icon: Icon(Icons.add),
-              label: Text("Add New"),
-            ),
+            // ElevatedButton.icon(
+            //   style: TextButton.styleFrom(
+            //     padding: EdgeInsets.symmetric(
+            //       horizontal: defaultPadding * 1.5,
+            //       vertical:
+            //           defaultPadding / (Responsive.isMobile(context) ? 2 : 1),
+            //     ),
+            //   ),
+            //   onPressed: () {},
+            //   icon: Icon(Icons.add),
+            //   label: Text("Add New"),
+            // ),
           ],
         ),
         SizedBox(height: defaultPadding),
