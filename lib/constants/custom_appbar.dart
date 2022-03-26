@@ -40,6 +40,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
                 transitionOnUserGestures: true,
                 tag: widget.buttonHeroTag!,
                 child: Card(
+                  color: Color(0xFFE7004C),
                   elevation: 10,
                   child: MaterialButton(
                     height: MediaQuery.of(context).size.height / 17,
@@ -53,7 +54,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
                 tag: widget.titleHeroTag!,
                 transitionOnUserGestures: true,
                 child: Card(
-                  // color: Color(0xFFE7004C),
+                  color: Color(0xFFE7004C),
                   elevation: 10,
                   child: InkWell(
                     onTap: widget.onTitleTapped,
@@ -71,9 +72,10 @@ class _CustomAppBarState extends State<CustomAppBar> {
                             child: Text(
                               widget.title!,
                               style: TextStyle(
-                                  //  fontWeight: FontWeight.bold,
-                                  //letterSpacing: 1,
-                                  fontSize: 18),
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 1,
+                                  fontSize: 18,
+                                  color: Colors.white),
                             ),
                           ),
                         ),

@@ -27,6 +27,13 @@ dependencies:
   recase: ^4.0.0
   shimmer: ^2.0.0
   cool_alert: ^1.1.0
+  fluttertoast: ^8.0.7
+  top_snackbar_flutter: ^1.0.0
+  move_to_background: ^1.0.2
+  #syncfusion_flutter_calendar: ^19.1.69
+  table_calendar: ^3.0.0
+  #login
+  google_sign_in: ^5.0.4
   #maps
   geolocator: ^7.0.3
   latlong2: ^0.8.0

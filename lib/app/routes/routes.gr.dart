@@ -9,7 +9,8 @@ import 'package:flutter/material.dart' as _i2;
 
 import '../../homeScreen/home_Screen.dart' as _i4;
 import '../../login/sign_In.dart' as _i3;
-import '../../login/signinScreenWords.dart' as _i5;
+import '../../login/signinScreenWords.dart' as _i6;
+import '../../splash_Screen/splash_screen.dart' as _i5;
 
 class AppRouter extends _i1.RootStackRouter {
   AppRouter([_i2.GlobalKey<_i2.NavigatorState>? navigatorKey])
@@ -20,7 +21,8 @@ class AppRouter extends _i1.RootStackRouter {
     SigninUserAndPassword.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
         builder: (data) {
-          final args = data.argsAs<SigninUserAndPasswordArgs>();
+          final args = data.argsAs<SigninUserAndPasswordArgs>(
+              orElse: () => const SigninUserAndPasswordArgs());
           return _i3.SigninUserAndPassword(
               backgroundColor: args.backgroundColor,
               logo: args.logo,
@@ -39,7 +41,13 @@ class AppRouter extends _i1.RootStackRouter {
         builder: (data) {
           final args =
               data.argsAs<HomeScreenArgs>(orElse: () => const HomeScreenArgs());
-          return _i4.HomeScreen(backgroundColor: args.backgroundColor);
+          return _i4.HomeScreen(
+              backgroundColor: args.backgroundColor, logo: args.logo);
+        }),
+    SplashScreen.name: (routeData) => _i1.MaterialPageX<dynamic>(
+        routeData: routeData,
+        builder: (_) {
+          return _i5.SplashScreen();
         })
   };
 
@@ -49,7 +57,8 @@ class AppRouter extends _i1.RootStackRouter {
             path: '/', redirectTo: '/SigninUserAndPassword', fullMatch: true),
         _i1.RouteConfig(SigninUserAndPassword.name,
             path: '/SigninUserAndPassword'),
-        _i1.RouteConfig(HomeScreen.name, path: '/HomeScreen')
+        _i1.RouteConfig(HomeScreen.name, path: '/HomeScreen'),
+        _i1.RouteConfig(SplashScreen.name, path: '/SplashScreen')
       ];
 }
 
@@ -65,8 +74,8 @@ class SigninUserAndPassword
       _i2.Widget? widgetResetPassword,
       bool? isSignUp,
       _i2.Widget? signUp,
-      required Function callLogin,
-      _i5.SigninScreenWords? signinScreenWords})
+      Function? callLogin,
+      _i6.SigninScreenWords? signinScreenWords})
       : super(name,
             path: '/SigninUserAndPassword',
             args: SigninUserAndPasswordArgs(
@@ -96,7 +105,7 @@ class SigninUserAndPasswordArgs {
       this.widgetResetPassword,
       this.isSignUp,
       this.signUp,
-      required this.callLogin,
+      this.callLogin,
       this.signinScreenWords});
 
   final _i2.Color? backgroundColor;
@@ -117,22 +126,30 @@ class SigninUserAndPasswordArgs {
 
   final _i2.Widget? signUp;
 
-  final Function callLogin;
+  final Function? callLogin;
 
-  final _i5.SigninScreenWords? signinScreenWords;
+  final _i6.SigninScreenWords? signinScreenWords;
 }
 
 class HomeScreen extends _i1.PageRouteInfo<HomeScreenArgs> {
-  HomeScreen({_i2.Color? backgroundColor})
+  HomeScreen({_i2.Color? backgroundColor, String? logo})
       : super(name,
             path: '/HomeScreen',
-            args: HomeScreenArgs(backgroundColor: backgroundColor));
+            args: HomeScreenArgs(backgroundColor: backgroundColor, logo: logo));
 
   static const String name = 'HomeScreen';
 }
 
 class HomeScreenArgs {
-  const HomeScreenArgs({this.backgroundColor});
+  const HomeScreenArgs({this.backgroundColor, this.logo});
 
   final _i2.Color? backgroundColor;
+
+  final String? logo;
+}
+
+class SplashScreen extends _i1.PageRouteInfo {
+  const SplashScreen() : super(name, path: '/SplashScreen');
+
+  static const String name = 'SplashScreen';
 }

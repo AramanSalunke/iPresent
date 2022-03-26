@@ -6,14 +6,18 @@ import 'package:ipresent/core/enums/firebase_auth_results.dart';
 import 'package:ipresent/core/enums/helpers/shared_preference_helper.dart';
 import 'package:ipresent/core/enums/services/firebase_services/auth_services.dart';
 import 'package:ipresent/homeScreen/home_Screen.dart';
+import 'package:ipresent/splash_Screen/splash_screen_model.dart';
 import 'package:ipresent/util/snackbar_ui.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class SigninModel extends BaseViewModel {
   AuthServices _authServices = locator<AuthServices>();
   SnackbarService _snackbarService = locator<SnackbarService>();
   SharedPreferencesHelper _preferencesHelper = SharedPreferencesHelper();
+  SplashScreenModel _splashScreenViewModel = SplashScreenModel();
   String _email = "";
   String _password = "";
   String? _passwordError = null;
@@ -45,24 +49,39 @@ class SigninModel extends BaseViewModel {
         await _authServices.signIn(_email, _password);
 
     if (authResults == FirebaseAuthResults.Success) {
-      await _snackbarService.showCustomSnackBar(
-          message: "Login Successfull",
-          duration: Duration(seconds: 4),
-          variant: SnackbarType.Success,
-          title: "Welcome");
-      notifyListeners();
-      //AutoRoute(path: '/HomeScreen/*', page: HomeScreen);
-      Navigator.push(
+      showTopSnackBar(
         context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
+        CustomSnackBar.success(
+          message: "Login Successfull",
+        ),
       );
+      //  _snackbarService.showCustomSnackBar(
+      //     message: "Login Successfull",
+      //     duration: Duration(seconds: 4),
+      //     variant: SnackbarType.Success,
+      //     title: "Welcome");
+      notifyListeners();
+      await _splashScreenViewModel.startupLogic(context);
+      //AutoRoute(path: '/HomeScreen/*', page: HomeScreen);
+      Future.delayed(Duration(seconds: 3), () {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => HomeScreen()),
+        );
+      });
     } else {
-      await _snackbarService.showCustomSnackBar(
-        message: _errorType(authResults),
-        duration: Duration(seconds: 4),
-        variant: SnackbarType.Error,
-        title: "Error",
+      showTopSnackBar(
+        context,
+        CustomSnackBar.error(
+          message: _errorType(authResults),
+        ),
       );
+
+      // await _snackbarService.showCustomSnackBar(
+      //   message: _errorType(authResults),
+      //   duration: Duration(seconds: 4),
+      //   variant: SnackbarType.Error,
+      //   title: "Error",
+      // );
     }
   }
 }
@@ -78,7 +97,7 @@ String _errorType(FirebaseAuthResults authResult) {
     case FirebaseAuthResults.TooManyAttempts:
       return "Please try again after some time, too many login request";
     case FirebaseAuthResults.UserNotFound:
-      return "Email not registered yet";
+      return "Email not registered yet, Please SignUp";
     case FirebaseAuthResults.Unknown:
       return "Unknown error, please try again";
     default:

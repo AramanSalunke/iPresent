@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:ipresent/login/footer_Signin.dart';
 
 import 'package:ipresent/login/sign_Up.dart';
@@ -40,63 +41,69 @@ class _SigninScreenState extends State<SigninScreen> {
   @override
   Widget build(BuildContext context) {
     widget.keyWord = widget.keyWord ?? SigninScreenWords();
-    return Stack(
-      children: [
-        Container(
-          color: widget.backgroundColor ?? Color(0xFFE7004C),
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.45,
-              width: MediaQuery.of(context).size.width * 0.60,
-              child: Center(
-                child: Image.asset(
-                  widget.pathLogo!,
-                  fit: BoxFit.contain,
+    return WillPopScope(
+      onWillPop: () async {
+        await SystemNavigator.pop();
+        return false;
+      },
+      child: Stack(
+        children: [
+          Container(
+            color: widget.backgroundColor ?? Color(0xFFE7004C),
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.45,
+                width: MediaQuery.of(context).size.width * 0.60,
+                child: Center(
+                  child: Image.asset(
+                    widget.pathLogo!,
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(
-            height: MediaQuery.of(context).size.height * 0.55,
-            width: MediaQuery.of(context).size.width,
-            decoration: new BoxDecoration(
-                color: widget.cardColor ?? Color(0xFFF3F3F5),
-                borderRadius: new BorderRadius.only(
-                  topLeft: const Radius.circular(50.0),
-                  topRight: const Radius.circular(50.0),
-                )),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                SizedBox(),
-                Column(
-                  children: [
-                    buildLoginWith(),
-                    buildTypeLogin(context),
-                    (widget.isExploreApp == null ||
-                            widget.isExploreApp == false)
-                        ? SizedBox()
-                        : SizedBox(
-                            height: 20,
-                          ),
-                    buildExploreApp(context),
-                    (widget.isSignUp == null || widget.isSignUp == false)
-                        ? SizedBox()
-                        : buildSignUp(),
-                  ],
-                ),
-                widget.widgetFooter!
-              ],
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.55,
+              width: MediaQuery.of(context).size.width,
+              decoration: new BoxDecoration(
+                  color: widget.cardColor ?? Color(0xFFF3F3F5),
+                  borderRadius: new BorderRadius.only(
+                    topLeft: const Radius.circular(50.0),
+                    topRight: const Radius.circular(50.0),
+                  )),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  SizedBox(),
+                  Column(
+                    children: [
+                      buildLoginWith(),
+                      buildTypeLogin(context),
+                      (widget.isExploreApp == null ||
+                              widget.isExploreApp == false)
+                          ? SizedBox()
+                          : SizedBox(
+                              height: 20,
+                            ),
+                      buildExploreApp(context),
+                      (widget.isSignUp == null || widget.isSignUp == false)
+                          ? SizedBox()
+                          : buildSignUp(),
+                    ],
+                  ),
+                  widget.widgetFooter!
+                ],
+              ),
             ),
-          ),
-        )
-      ],
+          )
+        ],
+      ),
     );
   }
 
