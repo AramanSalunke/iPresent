@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ipresent/app/locator.dart';
 import 'package:ipresent/splash_Screen/splash_screen.dart';
+import 'package:ipresent/util/dialog_ui.dart';
 import 'package:ipresent/util/snackbar_ui.dart';
 
 void main() async {
@@ -13,6 +14,7 @@ void main() async {
   await Firebase.initializeApp();
   //await FlutterConfig.loadEnvVariables();
   setupLocator();
+  setupDialogUi();
   setupSnackbarUi();
   runApp(MyApp());
 }

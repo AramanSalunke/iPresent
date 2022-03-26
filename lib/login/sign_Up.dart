@@ -311,11 +311,13 @@ class _SignUpState extends State<SignUp> {
                 onTap: () async {
                   await model.register(context);
                   if (model.getIsSuccess == true) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => widgetSigninUserPassword()),
-                    );
+                    Future.delayed(Duration(seconds: 3), () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => widgetSigninUserPassword()),
+                      );
+                    });
                   }
                   // widget.funSignUp!(
                   //   context,

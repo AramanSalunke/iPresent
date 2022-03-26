@@ -23,6 +23,10 @@ class FirebaseAuthException {
       case 'Too many unsuccessful login attempts.  Please include reCaptcha verification or try again later':
         errorType = FirebaseAuthResults.TooManyAttempts;
         break;
+      case 'email-already-in-use':
+      case 'The email address is already in use by another account.':
+        errorType = FirebaseAuthResults.EmailExist;
+        break;
       // ...
       default:
         debugPrint('The Error ${e.message} is not yet implemented');

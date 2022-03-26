@@ -11,6 +11,8 @@ import 'package:ipresent/util/snackbar_ui.dart';
 import 'package:stacked/stacked.dart';
 import 'package:ipresent/core/enums/helpers/shared_preference_helper.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class SignUpModel extends BaseViewModel {
   AuthServices _authServices = AuthServices();
@@ -63,12 +65,12 @@ class SignUpModel extends BaseViewModel {
 
   register(BuildContext context) async {
     //isSuccess = false;
-    if (validatePassword() == true) {
+    if (await validatePassword(context) == true) {
       //await _sharedPreferencesHelper.clearAllData();
       //String userUid = await _authServices.user().uid;
       // print("userUID=$userUid");
       FirebaseAuthResults authResults =
-          await _authServices.signUp(email!, password!);
+          await _authServices.signUp(email!, password!, context);
       String userUid = await _authServices.user().uid;
       Map<String, dynamic> data = {
         'firstName': name,
@@ -80,11 +82,11 @@ class SignUpModel extends BaseViewModel {
       if (authResults == FirebaseAuthResults.Success) {
         isSuccess = true;
         notifyListeners();
-        await _snackbarService.showCustomSnackBar(
-          message: "Signed Up Successfully",
-          duration: Duration(seconds: 4),
-          variant: SnackbarType.Success,
-          title: "Welcome",
+        showTopSnackBar(
+          context,
+          CustomSnackBar.success(
+            message: "SignUp Successfull",
+          ),
         );
         isSuccess = true;
         notifyListeners();
@@ -94,14 +96,21 @@ class SignUpModel extends BaseViewModel {
 
         //notifyListeners();
       } else {
-        await _snackbarService.showCustomSnackBar(
-          message: _errorType(authResults),
-          duration: Duration(seconds: 4),
-          variant: SnackbarType.Error,
-          title: "Error",
+        showTopSnackBar(
+          context,
+          CustomSnackBar.error(
+            message: _errorType(authResults),
+          ),
         );
         notifyListeners();
       }
+    } else {
+      // showTopSnackBar(
+      //   context,
+      //   CustomSnackBar.error(
+      //     message:"y" ,
+      //   ),
+      // );
     }
   }
 
@@ -119,34 +128,45 @@ class SignUpModel extends BaseViewModel {
         return "Email not registered yet";
       case FirebaseAuthResults.Unknown:
         return "Unknown error, please try again";
+      case FirebaseAuthResults.EmailExist:
+        return "The email address is already in use by another account";
       default:
         return "Unknown error, please try again";
     }
   }
 
-  validatePassword() {
-    if (email == "") {
-      displayErrorMessage("Please enter E-mail");
-    } else if (name == "") {
-      displayErrorMessage("Please enter Name");
-    } else if (surname == "") {
-      displayErrorMessage("Please enter Surame");
-    } else if (password == "") {
-      displayErrorMessage("Please enter Password");
-    } else if (repeatPassword == "") {
-      displayErrorMessage("Please enter RepeatPassword");
-    } else if (password == repeatPassword) {
-      return true;
+  validatePassword(BuildContext context) async {
+    if (email == "" || email == null) {
+      await displayErrorMessage("Please enter E-mail", context);
+      return false;
+    } else if (name == "" || name == null) {
+      await displayErrorMessage("Please enter Name", context);
+      return false;
+    } else if (surname == "" || surname == null) {
+      await displayErrorMessage("Please enter Surame", context);
+      return false;
+    } else if (password == "" || password == null) {
+      await displayErrorMessage("Please enter Password", context);
+      return false;
+    } else if (repeatPassword == "" || repeatPassword == null) {
+      await displayErrorMessage("Please enter RepeatPassword", context);
+      return false;
+    } else if (password != repeatPassword) {
+      await displayErrorMessage("Password doesn't match", context);
+      return false;
     }
-    return false;
+    return true;
   }
 
-  displayErrorMessage(String message) async {
-    await _snackbarService.showCustomSnackBar(
-      message: message,
-      duration: Duration(seconds: 4),
-      variant: SnackbarType.Error,
-      title: "Error",
+  displayErrorMessage(String message, BuildContext context) async {
+    showTopSnackBar(
+      context,
+      CustomSnackBar.error(
+        message: message,
+      ),
     );
+    notifyListeners();
   }
+
+  notifyListeners();
 }

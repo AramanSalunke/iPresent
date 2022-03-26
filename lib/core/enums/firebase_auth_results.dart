@@ -4,5 +4,6 @@ enum FirebaseAuthResults {
   NetworkError,
   Success,
   TooManyAttempts,
-  Unknown
+  Unknown,
+  EmailExist
 }

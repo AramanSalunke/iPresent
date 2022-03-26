@@ -10,10 +10,12 @@ import 'package:ipresent/core/enums/services/firebase_services/firebase_exceptio
     as FirebaseAuthExceptions;
 
 import 'package:stacked_services/stacked_services.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 @singleton
 class AuthServices extends Services {
-  //SnackbarService _snackbarService = locator<SnackbarService>();
+  SnackbarService _snackbarService = locator<SnackbarService>();
   SharedPreferencesHelper _sharedPreferencesHelper = SharedPreferencesHelper();
   var userData;
   Future getLoggedInUserData() async {
@@ -42,7 +44,8 @@ class AuthServices extends Services {
     await auth().sendPasswordResetEmail(email: email);
   }
 
-  Future<FirebaseAuthResults> signUp(String email, String password) async {
+  Future<FirebaseAuthResults> signUp(
+      String email, String password, BuildContext context) async {
     try {
       await auth()
           .createUserWithEmailAndPassword(email: email, password: password);
@@ -54,6 +57,12 @@ class AuthServices extends Services {
         return FirebaseAuthResults.Unknown;
       }
     } catch (e) {
+      showTopSnackBar(
+        context,
+        CustomSnackBar.error(
+          message: e.toString(),
+        ),
+      );
       return FirebaseAuthExceptions.FirebaseAuthException.catchException(e);
     }
   }

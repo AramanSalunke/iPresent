@@ -16,6 +16,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'package:stacked_services/stacked_services.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class AttendanceViewModel extends BaseViewModel {
   final Geolocator geolocator = Geolocator();
@@ -35,7 +37,7 @@ class AttendanceViewModel extends BaseViewModel {
   Attendance? _attandance;
   double? _latitude = 00;
   double? _longitude = 00;
-  double? _altitude;
+  double? _altitude = 00;
   String? status = "";
   String? dateTime = "";
   String? greetings = "";
@@ -43,8 +45,10 @@ class AttendanceViewModel extends BaseViewModel {
   get attendanceStatus => status;
   get attendanceDate => dateTime;
   get latitude => _latitude;
-  notifyListeners();
+
   get longitude => _longitude;
+  get altitude => _altitude;
+  notifyListeners();
 
   setLocation() async {
     await Geolocator.getPositionStream().listen((position) {
@@ -69,18 +73,16 @@ class AttendanceViewModel extends BaseViewModel {
     greetings = greeting();
 
     _attandance!.serverResponseCode == 0
-        ? await _snackbarService.showCustomSnackBar(
-            message: status!,
-            duration: Duration(seconds: 4),
-            variant: SnackbarType.Success,
-            title: "Welcome",
+        ? showTopSnackBar(
+            context,
+            CustomSnackBar.success(
+              message: "Welcome",
+            ),
           )
-        : await _snackbarService.showCustomSnackBar(
-            message: status!,
-            duration: Duration(seconds: 4),
-            variant: SnackbarType.Warning,
-            title: "Error",
-          );
+        : showTopSnackBar(
+            context,
+            CustomSnackBar.success(
+                message: "Attendance Registered Successfully"));
     notifyListeners();
     await Future.delayed(Duration(seconds: 5));
     // await _splashScreenViewModel.startupLogic(context);

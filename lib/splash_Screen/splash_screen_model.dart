@@ -30,12 +30,20 @@ class SplashScreenModel extends BaseViewModel {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     //var usertype = await _preferencesHelper.getLoggedInUserId();
     if (preferences.containsKey('_loggedInUserId')) {
-      Navigator.of(context).push(
-          MaterialPageRoute(builder: (_buildContest) => home.HomeScreen()));
+      Future.delayed(Duration(seconds: 3), () {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (_buildContest) => home.HomeScreen(),
+          ),
+        );
+      });
     } else {
-      //await ExtendedNavigator.root!.replace()
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (_buildContest) => LoginScreen()));
+      // await ExtendedNavigator.root!.replace()
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (_buildContest) => LoginScreen(),
+        ),
+      );
     }
   }
 }

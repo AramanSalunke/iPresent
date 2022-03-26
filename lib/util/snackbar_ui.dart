@@ -8,13 +8,13 @@ import 'package:stacked_services/stacked_services.dart';
 void setupSnackbarUi() {
   final service = locator<SnackbarService>();
   // Registers a config to be used when calling showSnackbar
-  // service.registerSnackbarConfig(SnackbarConfig(
-  //   backgroundColor: AppColors.error,
-  //   animationDuration: Duration(milliseconds: 400),
-  //   isDismissible: true,
-  //   maxWidth: double.infinity,
-  //   snackPosition: SnackPosition.TOP,
-  // ));
+  service.registerSnackbarConfig(SnackbarConfig(
+    backgroundColor: Colors.red,
+    animationDuration: Duration(milliseconds: 400),
+    isDismissible: true,
+    maxWidth: double.infinity,
+    snackPosition: SnackPosition.TOP,
+  ));
   service.registerCustomSnackbarConfig(
       variant: SnackbarType.Success,
       config: SnackbarConfig(

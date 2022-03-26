@@ -122,7 +122,8 @@ class Attendance extends ChangeNotifier {
 
     Map<String, dynamic> data = {
 //"deviceId": "${this.userEmail}",
-      "date": DateTime.now(),
+      "punchInDate": DateTime.now(),
+      "punchOutDate": "",
       "deviceName": "${device!.name}",
       //"EventDateTime": "${now}",
       "Latitude": "${this.latitude}",

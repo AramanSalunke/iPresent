@@ -11,18 +11,25 @@ import 'package:ipresent/login/footer_Signin.dart';
 import 'package:ipresent/login/type_login.dart';
 import 'package:ipresent/splash_Screen/splash_screen.dart';
 import 'package:ipresent/util/snackbar_ui.dart';
+import 'package:move_to_background/move_to_background.dart';
 
 class LoginScreen extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      // title: 'Flutter Demo',
-      // theme: ThemeData(
-      //   primarySwatch: Colors.blue,
-      // ),
-      home: Scaffold(body: buildSigninScreen()),
+    return WillPopScope(
+      onWillPop: () async {
+        await SystemNavigator.pop();
+        return false;
+      },
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        // title: 'Flutter Demo',
+        // theme: ThemeData(
+        //   primarySwatch: Colors.blue,
+        // ),
+        home: Scaffold(body: buildSigninScreen()),
+      ),
     );
   }
 
@@ -44,7 +51,7 @@ class LoginScreen extends StatelessWidget {
           logo: TypeLogo.userPassword),
     ];
     return SigninScreen(
-      pathLogo: 'assets/logo.png',
+      pathLogo: 'assets/mlogo.png',
       isExploreApp: true,
       functionExploreApp: () {},
       isFooter: true,

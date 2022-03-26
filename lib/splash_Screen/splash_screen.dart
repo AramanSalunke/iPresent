@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:ipresent/splash_Screen/splash_screen_model.dart';
 import 'package:stacked/stacked.dart';
 
@@ -10,6 +11,7 @@ class SplashScreen extends StatelessWidget {
       onModelReady: (model) => model.startupLogic(context),
       builder: (context, model, child) => WillPopScope(
         onWillPop: () async {
+          await SystemNavigator.pop();
           return false;
         },
         child: Scaffold(
