@@ -46,7 +46,7 @@ dependencies:
   map: ^0.9.0
   cached_network_image: ^3.0.0
   flutter_map: ^0.13.0
-  dio: ^4.0.0
+  dio: ^5.0.3
   flutter_polyline_points: ^1.0.0
   google_maps_flutter: ^2.0.6
   
